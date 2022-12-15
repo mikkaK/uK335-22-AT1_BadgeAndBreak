@@ -40,16 +40,16 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ title: "Home" }}
-          />
+        <Stack.Navigator initialRouteName="Details">
           <Stack.Screen 
           name="Details"
           component={Details}
-          options={{ title: "Detail" }}
+          options={{ title: "Edit" }}
+          />
+          <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ title: "Reminders" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
