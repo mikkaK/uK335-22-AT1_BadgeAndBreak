@@ -18,11 +18,27 @@ type RootStackParamList = {
   Details: {};
 }
 
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#FF597B",
+    secondary: "#FF8E9E",
+    tertiary: "#F9B5D0",
+    neutral: "#EEEEEE",
+    error: "#BA1A1A",
+    onPrimary: "#FFFFFF",
+    primaryContainer: "#FFD8DD",
+    onPrimaryContainer: "#400012"
+  
+  }
+}
+
 const Stack = createStackNavigator<RootStackParamList>()
 
 export default function App() {
   return (
-    <PaperProvider theme={DefaultTheme}>
+    <PaperProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
