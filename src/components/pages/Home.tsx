@@ -13,6 +13,7 @@ import EditIconButton from '../atoms/editIconButton';
 
 export default function Home() {
 const testReminder:ReminderType = {
+    id: 1,
     title: "Das ist ein Test",
     time: "12:00",
     days: [weekDayEnum.MONDAY],
