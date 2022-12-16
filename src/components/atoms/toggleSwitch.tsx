@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Switch } from 'react-native-paper';
-import { styles } from "../../styles/home.styles"
+import styles from '../../styles/home.styles';
 
 
 const SwitchButton = () => {

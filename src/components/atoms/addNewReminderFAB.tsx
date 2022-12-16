@@ -1,5 +1,6 @@
+import React from "react"
 import { FAB } from "react-native-paper"
-import { styles } from "../../styles/home.styles"
+import  styles  from "../../styles/home.styles"
 
 
 export default function AddNewReminderFAB() {

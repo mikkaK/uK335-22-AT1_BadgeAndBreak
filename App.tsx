@@ -12,6 +12,8 @@ import {
 import Home from "./src/components/pages/Home";
 import Details from "./src/components/pages/Details";
 import { ImageBackground } from "react-native";
+import React from "react";
+
 
 
 type RootStackParamList = {

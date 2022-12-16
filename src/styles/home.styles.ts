@@ -1,12 +1,13 @@
 
 import { StyleSheet} from 'react-native';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      flexGrow: 1,
       alignItems: 'center',
       justifyContent: "center",
     },
+    
     card: {
         backgroundColor: 'pink',   
         marginLeft: "5%",
@@ -37,3 +38,5 @@ export const styles = StyleSheet.create({
 
     }
   });
+
+  export default styles;

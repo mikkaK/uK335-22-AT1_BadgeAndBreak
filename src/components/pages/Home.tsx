@@ -6,7 +6,7 @@ import { Reminders } from '../../types/models/Reminders.models';
 import weekDayEnum from '../../config/WeekDays';
 import repeatEnum from '../../config/Repeat';
 import AddNewReminderFAB from '../atoms/addNewReminderFAB';
-import { styles } from '../../styles/home.styles';
+import styles from '../../styles/home.styles';
 import EditIconButton from '../atoms/editIconButton';
 import SwitchButton from '../atoms/toggleSwitch';
 import { Navigate } from 'react-router-native';
@@ -27,7 +27,8 @@ const testReminder:Reminders = {
     console.log(testReminder)
     
  return (
-    <ScrollView style={styles.container}>
+   <View style={{flex:1}}>
+    <ScrollView contentContainerStyle={styles.container}>
       <ImageBackground source={require('./../../../assets/background.png')} style={{width: '100%', height: '100%'}}>
          <Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
             <Card.Title title={testReminder.title}>
@@ -83,5 +84,6 @@ const testReminder:Reminders = {
         <AddNewReminderFAB/>
       </ImageBackground>
     </ScrollView>
+    </View>
  ) 
 }
