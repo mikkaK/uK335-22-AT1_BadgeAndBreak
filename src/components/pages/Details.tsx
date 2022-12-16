@@ -1,10 +1,11 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import {View, StyleSheet, Text} from "react-native";
 import {TextInput, useTheme, Button, Snackbar} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
 import RepeatBar from "../atoms/RepeatBar";
 import {ReminderType} from "../../types/models/Reminders.models";
+import StorageService from "../../services/StorageService";
 
 
 export default function Details() {
@@ -12,6 +13,13 @@ export default function Details() {
     const [text, setText] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(true)
     const [selectedReminder, setSelectedReminder] = useState<ReminderType>()
+    const { storeData, getData } = StorageService
+
+    useEffect(() => {
+        getData("selectedReminder").then((value) => {
+
+        })
+    }, [])
 
     const styles = StyleSheet.create({
         container: {
