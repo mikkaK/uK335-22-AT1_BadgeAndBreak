@@ -1,13 +1,17 @@
 import {  Card, IconButton } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import { useState } from 'react';
+import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 import { Reminders } from '../../types/models/Reminders.models';
 import weekDayEnum from '../../config/WeekDays';
 import repeatEnum from '../../config/Repeat';
 import AddNewReminderFAB from '../atoms/addNewReminderFAB';
 import { styles } from '../../styles/home.styles';
 import EditIconButton from '../atoms/editIconButton';
+import SwitchButton from '../atoms/toggleSwitch';
+import { Navigate } from 'react-router-native';
+import { useNavigation } from "@react-navigation/core";
+import Details from './Details';
 
 
 
@@ -17,21 +21,67 @@ const testReminder:Reminders = {
     time: "12:00",
     days: weekDayEnum.MONDAY,
     repeat: repeatEnum.DAILY_REPEAT,
-}
+}  
+   const navigation = useNavigation(); 
     const [reminders, setRemiders] = useState<Reminders[]>([testReminder])
     console.log(testReminder)
     
  return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ImageBackground source={require('./../../../assets/background.png')} style={{width: '100%', height: '100%'}}>
-         <Card style={styles.card}>
+         <Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
             <Card.Title title={testReminder.title}>
           </Card.Title>
-          <EditIconButton/>
+          <SwitchButton/>
+         </Card>
+         <Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
+         </Card><Card onPress={()=>{navigation.navigate('Details' as never)}} style={styles.card}>
+            <Card.Title title={testReminder.title}>
+          </Card.Title>
+          <SwitchButton/>
          </Card>
         <StatusBar style="auto" />
         <AddNewReminderFAB/>
       </ImageBackground>
-    </View>
+    </ScrollView>
  ) 
 }
