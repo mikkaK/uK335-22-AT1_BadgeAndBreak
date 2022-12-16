@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {View, StyleSheet, Text} from "react-native";
-import {TextInput, useTheme, Button, Snackbar} from 'react-native-paper';
+import {KeyboardAvoidingView, StyleSheet, Text, View} from "react-native";
+import {Button, Snackbar, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
 import RepeatBar from "../atoms/RepeatBar";
@@ -13,7 +13,7 @@ export default function Details() {
     const [text, setText] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(true)
     const [selectedReminder, setSelectedReminder] = useState<ReminderType>()
-    const { storeData, getData } = StorageService
+    const {storeData, getData} = StorageService
 
     useEffect(() => {
         getData("selectedReminder").then((value) => {
@@ -23,14 +23,14 @@ export default function Details() {
 
     const styles = StyleSheet.create({
         container: {
-            flex : 1,
+            flex: 1,
             backgroundColor: theme.colors.primary,
-            marginBottom : "5%",
-            marginRight : "5%",
-            marginLeft : "5%",
+            marginBottom: "5%",
+            marginRight: "5%",
+            marginLeft: "5%",
         },
         clockContainer: {
-            flex : 3,
+            flex: 3,
             justifyContent: "center",
             alignItems: "center"
         },
@@ -44,50 +44,52 @@ export default function Details() {
             alignItems: "center",
         },
         saveButton: {
-            minWidth:"50%"
+            minWidth: "50%"
         },
-        snackbar: {
-
-        }
+        snackbar: {}
     })
 
     const handleTimeChange = () => {
-
+        return null;
     }
 
- return (
- <>
- <View style={styles.container}>
-    <TextInput
-     label={"message"}
-     placeholder={"messageToShow"}
-     onChangeText={text => setText(text)}
-     mode={'flat'}
-     theme={theme}
-     style={{height:"100%" }}
-     />
- </View>
- <View style={[styles.container, styles.clockContainer]}>
-    <CustomTimePicker handleConfirm={handleTimeChange} initialVisibility={false} handleTimeChange={handleTimeChange}/>
- </View>
- <View style={styles.container}>
-     <WeekdayBar />
- </View>
- <View style={styles.container}>
-     <RepeatBar />
- </View>
- <View style={[styles.container, styles.saveContainer]}>
-     <Button mode={"contained"} style={styles.saveButton} onPress={() => setIsSnackbarVisible(true)}>
-        <Text style={{width: "90%"}}>Save</Text>
-     </Button>
- </View>
- <View style={[styles.container, styles.snackbarContainer]}>
-     <Snackbar
-         visible={isSnackbarVisible}
-         onDismiss={() => {setIsSnackbarVisible(false)}}
-     >
-         <Text>Error</Text>
-     </Snackbar>
- </View>
- </>);
+    return (
+        <>
+                <View style={styles.container}>
+                    <TextInput
+                        label={"message"}
+                        placeholder={"messageToShow"}
+                        onChangeText={text => setText(text)}
+                        mode={'flat'}
+                        theme={theme}
+                        style={{height: "100%"}}
+                    />
+                </View>
+                <View style={[styles.container, styles.clockContainer]}>
+                    <CustomTimePicker handleConfirm={handleTimeChange} initialVisibility={false}
+                                      handleTimeChange={handleTimeChange}/>
+                </View>
+                <View style={styles.container}>
+                    <WeekdayBar/>
+                </View>
+                <View style={styles.container}>
+                    <RepeatBar/>
+                </View>
+                <View style={[styles.container, styles.saveContainer]}>
+                    <Button mode={"contained"} style={styles.saveButton} onPress={() => setIsSnackbarVisible(true)}>
+                        <Text style={{width: "90%"}}>Save</Text>
+                    </Button>
+                </View>
+                <View style={[styles.container, styles.snackbarContainer]}>
+                    <Snackbar
+                        visible={isSnackbarVisible}
+                        onDismiss={() => {
+                            setIsSnackbarVisible(false)
+                        }}
+                        style={{backgroundColor: theme.colors.error}}
+                    >
+                        <Text style={{color: theme.colors.onError}}>Error</Text>
+                    </Snackbar>
+                </View>
+        </>);
 }
