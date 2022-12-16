@@ -8,10 +8,12 @@ import repeatEnum from '../../config/Repeat';
 import AddNewReminderFAB from '../atoms/addNewReminderFAB';
 import { styles } from '../../styles/home.styles';
 import EditIconButton from '../atoms/editIconButton';
+import {useTranslation} from "react-i18next";
 
 
 
 export default function Home() {
+    const {t} = useTranslation()
 const testReminder:ReminderType = {
     id: 1,
     title: "Das ist ein Test",
@@ -25,6 +27,7 @@ const testReminder:ReminderType = {
 
  return (
     <View style={styles.container}>
+        <Text>{t("yourReminders")}</Text>
       <ImageBackground source={require('./../../../assets/background.png')} style={{width: '100%', height: '100%'}}>
          <Card style={styles.card}>
             <Card.Title title={testReminder.title}>
