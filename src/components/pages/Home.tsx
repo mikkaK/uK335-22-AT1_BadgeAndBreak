@@ -3,6 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { Reminders } from '../../types/models/Reminders.models';
+import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { ReminderType } from '../../types/models/Reminders.models';
 import weekDayEnum from '../../config/WeekDays';
 import repeatEnum from '../../config/Repeat';
 import AddNewReminderFAB from '../atoms/addNewReminderFAB';
@@ -16,16 +19,22 @@ import Details from './Details';
 
 
 export default function Home() {
-const testReminder:Reminders = {
+const testReminder:ReminderType = {
+    id: 1,
     title: "Das ist ein Test",
     time: "12:00",
-    days: weekDayEnum.MONDAY,
+    days: [weekDayEnum.MONDAY],
     repeat: repeatEnum.DAILY_REPEAT,
+
+   
+}
 }  
-   const navigation = useNavigation(); 
-    const [reminders, setRemiders] = useState<Reminders[]>([testReminder])
+   const navigation = useNavigation();
+
+    const [reminders, setRemiders] = useState<ReminderType[]>([testReminder])
     console.log(testReminder)
-    
+     isActive: true
+
  return (
    <View style={{flex:1}}>
     <ScrollView contentContainerStyle={styles.container}>
@@ -85,5 +94,5 @@ const testReminder:Reminders = {
       </ImageBackground>
     </ScrollView>
     </View>
- ) 
+ )
 }
