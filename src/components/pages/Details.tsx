@@ -1,8 +1,7 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { TextInput, useTheme, IconButton } from 'react-native-paper';
-import { TimePicker, TimePickerModal } from "react-native-paper-dates";
-import CustomTimePicker from "../components/CustomTimePicker";
+import { TextInput, useTheme } from 'react-native-paper';
+import CustomTimePicker from "../atoms/CustomTimePicker";
 
 const styles = StyleSheet.create({
     container: {
@@ -48,7 +47,7 @@ export default function Details() {
     <CustomTimePicker handleConfirm={handleTimeChange} initialVisibility={false} handleTimeChange={handleTimeChange}/>
  </View>
  <View style={styles.container}>
-     
+
  </View>
  <View style={styles.container}>
 
