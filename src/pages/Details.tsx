@@ -48,7 +48,7 @@ export default function Details() {
     <CustomTimePicker handleConfirm={handleTimeChange} initialVisibility={false} handleTimeChange={handleTimeChange}/>
  </View>
  <View style={styles.container}>
-
+     
  </View>
  <View style={styles.container}>
 
