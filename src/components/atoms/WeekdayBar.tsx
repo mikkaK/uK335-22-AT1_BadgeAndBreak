@@ -3,11 +3,9 @@ import {Avatar, TouchableRipple, useTheme} from "react-native-paper";
 import WeekDays from "../../config/WeekDays";
 import {useState} from "react";
 import weekDays from "../../config/WeekDays";
+import {WeekdayType} from "../../types/WeekDayType";
 
-type WeekdayType = {
-    value: string,
-    isSelected: boolean,
-}
+
 
 export default function () {
     const theme = useTheme();

@@ -6,6 +6,10 @@ import WeekdayBar from "../atoms/WeekdayBar";
 import RepeatBar from "../atoms/RepeatBar";
 import {ReminderType} from "../../types/models/Reminders.models";
 import StorageService from "../../services/StorageService";
+import weekDayEnum from "../../config/WeekDays";
+import {WeekdayType} from "../../types/WeekDayType";
+import Repeat from "../../config/Repeat";
+import useThenable from "@react-navigation/native/lib/typescript/src/useThenable";
 
 
 export default function Details() {
@@ -17,9 +21,56 @@ export default function Details() {
 
     useEffect(() => {
         getData("selectedReminder").then((value) => {
-
+            if (value === undefined || value === null){
+                setSelectedReminder({
+                    days: [],
+                    id: 0,
+                    isActive: true,
+                    repeat: undefined,
+                    time: "",
+                    title: ""}
+                )
+            }
+            setSelectedReminder(JSON.parse(value))
         })
     }, [])
+
+    const handleSave = () => {
+        let tempDays:WeekdayType[] = undefined
+        let tempRepeat:string = undefined
+        let tempTime:string = undefined
+        getData("tempDays").then((value) => {
+            if (valueIsPresent(value)) {
+                tempDays = JSON.parse(value)
+            }
+        })
+        getData("tempRepeat").then((value) => {
+            if (valueIsPresent(value)) {
+                tempRepeat = value
+            }
+        })
+        getData("tempTime").then((value) => {
+            if (valueIsPresent(value)){
+                tempTime = value
+            }
+        })
+        const tempReminder:ReminderType = {
+            days : tempDays,
+            repeat : tempRepeat,
+            isActive: true,
+            id: undefined,
+            time: tempTime,
+            title: text
+            //todo get time from timepicker in Date format for notification service
+        }
+    }
+
+    const valueIsPresent = (value:string) : boolean => {
+            if (value !== null || value !== undefined){
+                return true
+            }
+            return false
+        }
 
     const styles = StyleSheet.create({
         container: {
