@@ -9,8 +9,9 @@ import {
   IconButton,
   MD3Colors,
 } from "react-native-paper";
-import Home from "./src/pages/Home";
-import Details from "./src/pages/Details";
+import Home from "./src/components/pages/Home";
+import Details from "./src/components/pages/Details";
+import { ImageBackground } from "react-native";
 
 
 type RootStackParamList = {
@@ -54,6 +55,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
+
   );
 }
 
