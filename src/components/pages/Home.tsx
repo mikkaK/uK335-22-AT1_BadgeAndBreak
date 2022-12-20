@@ -1,42 +1,135 @@
-import {  Card, IconButton } from 'react-native-paper';
-import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import { useState } from 'react';
-import { ReminderType } from '../../types/models/Reminders.models';
+import {Card} from 'react-native-paper';
+import {StatusBar} from 'expo-status-bar';
+import {ImageBackground, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useState} from 'react';
+import {ReminderType} from '../../types/models/Reminders.models';
 import weekDayEnum from '../../config/WeekDays';
 import repeatEnum from '../../config/Repeat';
 import AddNewReminderFAB from '../atoms/addNewReminderFAB';
-import { styles } from '../../styles/home.styles';
+import {styles} from '../../styles/home.styles';
 import EditIconButton from '../atoms/editIconButton';
 import {useTranslation} from "react-i18next";
+import {NativeRouter} from "react-router-native";
 
 
-
-export default function Home() {
+export default function Home({navigation}) {
     const {t} = useTranslation()
-const testReminder:ReminderType = {
-    id: 1,
-    title: "Das ist ein Test",
-    time: "12:00",
-    days: [weekDayEnum.MONDAY],
-    repeat: repeatEnum.DAILY_REPEAT,
-    isActive: true
-}
-    const [reminders, setRemiders] = useState<ReminderType[]>([testReminder])
-    console.log(testReminder)
 
- return (
-    <View style={styles.container}>
-        <Text>{t("yourReminders")}</Text>
-      <ImageBackground source={require('./../../../assets/background.png')} style={{width: '100%', height: '100%'}}>
-         <Card style={styles.card}>
-            <Card.Title title={testReminder.title}>
-          </Card.Title>
-          <EditIconButton/>
-         </Card>
-        <StatusBar style="auto" />
-        <AddNewReminderFAB/>
-      </ImageBackground>
-    </View>
- )
+    const [reminders, setRemiders] = useState<ReminderType[]>([
+        {
+            id: 1,
+            title: "Das ist ein Test",
+            time: "12:00",
+            days: [weekDayEnum.MONDAY],
+            repeat: repeatEnum.DAILY_REPEAT,
+            isActive: true
+        }, {
+            id: 2,
+            title: "Das ist noch ein Test",
+            time: "13:00",
+            days: [weekDayEnum.TUESDAY],
+            repeat: repeatEnum.WEEKLY_REPEAT,
+            isActive: false
+        },
+        {
+            id: 3,
+            title: "Das ist ein Test",
+            time: "12:00",
+            days: [weekDayEnum.MONDAY],
+            repeat: repeatEnum.DAILY_REPEAT,
+            isActive: true
+        }, {
+            id: 4,
+            title: "Das ist noch ein Test",
+            time: "13:00",
+            days: [weekDayEnum.TUESDAY],
+            repeat: repeatEnum.WEEKLY_REPEAT,
+            isActive: false
+        },
+        {
+            id: 5,
+            title: "Das ist ein Test",
+            time: "12:00",
+            days: [weekDayEnum.MONDAY],
+            repeat: repeatEnum.DAILY_REPEAT,
+            isActive: true
+        }, {
+            id: 6,
+            title: "Das ist noch ein Test",
+            time: "13:00",
+            days: [weekDayEnum.TUESDAY],
+            repeat: repeatEnum.WEEKLY_REPEAT,
+            isActive: false
+        },
+        {
+            id: 7,
+            title: "Das ist ein Test",
+            time: "12:00",
+            days: [weekDayEnum.MONDAY],
+            repeat: repeatEnum.DAILY_REPEAT,
+            isActive: true
+        }, {
+            id: 8,
+            title: "Das ist noch ein Test",
+            time: "13:00",
+            days: [weekDayEnum.TUESDAY],
+            repeat: repeatEnum.WEEKLY_REPEAT,
+            isActive: false
+        }
+        , {
+            id: 6,
+            title: "Das ist noch ein Test",
+            time: "13:00",
+            days: [weekDayEnum.TUESDAY],
+            repeat: repeatEnum.WEEKLY_REPEAT,
+            isActive: false
+        },
+        {
+            id: 7,
+            title: "Das ist ein Test",
+            time: "12:00",
+            days: [weekDayEnum.MONDAY],
+            repeat: repeatEnum.DAILY_REPEAT,
+            isActive: true
+        }, {
+            id: 8,
+            title: "Das ist noch ein Test",
+            time: "13:00",
+            days: [weekDayEnum.TUESDAY],
+            repeat: repeatEnum.WEEKLY_REPEAT,
+            isActive: false
+        }
+        , {
+            id: 6,
+            title: "Das ist noch ein Test",
+            time: "13:00",
+            days: [weekDayEnum.TUESDAY],
+            repeat: repeatEnum.WEEKLY_REPEAT,
+            isActive: false
+        }
+    ])
+
+
+    return (
+
+        <View style={styles.container}>
+            <ImageBackground source={require('./../../../assets/background.png')}
+                             style={{width: '100%', height: '100%'}}>
+                <ScrollView style={styles.scrollView}>
+                        {reminders.map(reminders => (
+                            <Card style={styles.card}>
+                                <Card.Title title={reminders.id}>
+                                </Card.Title>
+                                <EditIconButton/>
+                            </Card>
+                        ))}
+                </ScrollView>
+                <StatusBar style="auto"/>
+                <View style={styles.FABContainer}>
+                <AddNewReminderFAB navigation={navigation}/>
+                </View>
+            </ImageBackground>
+        </View>
+
+    )
 }

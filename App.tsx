@@ -7,6 +7,7 @@ import {
 } from "react-native-paper";
 import Home from "./src/components/pages/Home";
 import Details from "./src/components/pages/Details";
+import {NativeRouter} from "react-router-native";
 // on top of your index.android.js file
 const isAndroid = require('react-native').Platform.OS === 'android'; // this line is only needed if you don't use an .android.js file
 
@@ -74,9 +75,10 @@ const Stack = createStackNavigator<RootStackParamList>()
 
 export default function App() {
   return (
+      <NativeRouter>
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Details">
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
           name="Details"
           component={Details}
@@ -90,6 +92,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
+</NativeRouter>
 
   );
 }
