@@ -2,20 +2,25 @@ import {StyleSheet, View} from "react-native";
 import {Avatar, TouchableRipple, useTheme} from "react-native-paper";
 import WeekDays from "../../config/WeekDays";
 import {useState} from "react";
-import weekDays from "../../config/WeekDays";
 import {WeekdayType} from "../../types/WeekDayType";
 
+type PropType = {
+    handleStateChange: (stateAndValue : {
+        isSelected: boolean,
+        value: string
+    }) => any;
+}
 
-
-export default function () {
+export default function (props:PropType) {
     const theme = useTheme();
+    const {handleStateChange} = props;
     const [weekdays, setWeekdays] = useState<WeekdayType[]>([
         {
-            isSelected: true,
+            isSelected: false,
             value: WeekDays.MONDAY
         },
         {
-            isSelected: true,
+            isSelected: false,
             value: WeekDays.TUESDAY
         },
         {
@@ -67,14 +72,17 @@ export default function () {
             borderWidth: 1
         }
     })
-    const handlePress =(value: string) => {
+
+    const handlePress =(item:WeekdayType) => {
+        const { value } = item;
         let weekdaysCopy = [...weekdays]
         let index = weekdaysCopy.findIndex(item => item.value === value)
         let toChange = {...weekdaysCopy[index]}
         toChange.isSelected = !toChange.isSelected
         weekdaysCopy[index] = toChange
         setWeekdays(weekdaysCopy)
-
+        //todo simplify
+        handleStateChange(weekdaysCopy[index]);
     }
 
 
@@ -83,12 +91,11 @@ export default function () {
             {weekdays.map((item: WeekdayType) => {
                 return (
                     <View style={styles.item}>
-                        <TouchableRipple onPress={() => handlePress(item.value)}>
+                        <TouchableRipple onPress={() => handlePress(item)}>
                         <Avatar.Text size={40}
                                      label={item.value}
                                      style={item.isSelected ? styles.buttonSelected : styles.button}
                                      labelStyle={{fontWeight: "bold", fontSize: 17}}
-
                         />
                         </TouchableRipple>
                     </View>
