@@ -1,9 +1,10 @@
 import {useCallback, useState} from "react";
 import {View, StyleSheet} from "react-native";
-import { useTheme, IconButton} from 'react-native-paper';
-import { TimePickerModal, en, de, nl, enGB, registerTranslation} from "react-native-paper-dates";
+import {useTheme, IconButton} from 'react-native-paper';
+import {TimePickerModal, en, de, nl, enGB, registerTranslation} from "react-native-paper-dates";
 import "intl";
 import {useTranslation} from "react-i18next";
+import {styles} from "../../styles/timePicker.styles"
 
 registerTranslation('de', de);
 registerTranslation('en', en);
@@ -16,17 +17,6 @@ type PropType = {
     }) => any;
 }
 
-const styles = StyleSheet.create({
-    timeKeyboardContainer: {
-        flex: 2,
-        justifyContent: "center",
-    },
-    timeClockIconContainer: {
-        flex: 1,
-        alignContent: "center",
-        justifyContent: "center"
-    }
-})
 /**
  *
  * @param props
@@ -61,7 +51,7 @@ export default function CustomTimePicker(props: PropType) {
                                          setModalIsVisible(false);
                                      }}
                                      label={t("description.enterTimeClock")}
-                                     cancelLabel = {t("description.cancel")}
+                                     cancelLabel={t("description.cancel")}
                                      hours={currentTime.getHours()}
                                      minutes={currentTime.getMinutes()}
                                      uppercase={true}
