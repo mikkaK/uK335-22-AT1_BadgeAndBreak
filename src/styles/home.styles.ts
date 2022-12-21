@@ -1,4 +1,3 @@
-
 import { StyleSheet} from 'react-native';
 import {transparent} from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 
