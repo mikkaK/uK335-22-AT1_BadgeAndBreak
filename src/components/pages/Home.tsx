@@ -69,7 +69,7 @@ export default function Home({navigation}) {
             repeat: repeatEnum.DAILY_REPEAT,
             isActive: true
         }, {
-            id: 8,
+            id: 82,
             title: "Das ist noch ein Test",
             time: "13:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
@@ -92,7 +92,7 @@ export default function Home({navigation}) {
             repeat: repeatEnum.DAILY_REPEAT,
             isActive: true
         }, {
-            id: 8,
+            id: 81,
             title: "Das ist noch ein Test",
             time: "13:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
@@ -130,7 +130,7 @@ export default function Home({navigation}) {
                             <Card style={styles.card}>
                                 <Card.Content>
                                     <Title>{reminder.id}</Title>
-                                    <Text>Zeit: {reminder.time}, {reminder.repeat}</Text>
+                                    <Text>{t("description.time")}, {reminder.time}, {t("description." + reminder.repeat)}</Text>
                                 </Card.Content>
                                 <SwitchButton/>
                             </Card>

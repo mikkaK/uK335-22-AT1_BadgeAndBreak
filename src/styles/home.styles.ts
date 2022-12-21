@@ -1,5 +1,4 @@
 import { StyleSheet} from 'react-native';
-import {transparent} from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 
 export const styles = StyleSheet.create({
     container: {
@@ -15,8 +14,6 @@ export const styles = StyleSheet.create({
         marginBottom: "5%",
         marginTop: "2%",
         width: "90%",
-        minHeight:"10%",
-        //TODO min max stuff damit nicht kacke
 
     },
     iconButton: {
@@ -40,7 +37,7 @@ export const styles = StyleSheet.create({
 
 
     }, scrollView: {
-      flex:9
+      flex:1
     },
     FABContainer: {
         flex:0.19

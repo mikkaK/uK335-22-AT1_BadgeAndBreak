@@ -10,6 +10,7 @@ import weekDayEnum from "../../config/WeekDays";
 import {WeekdayType} from "../../types/WeekDayType";
 import Repeat from "../../config/Repeat";
 import useThenable from "@react-navigation/native/lib/typescript/src/useThenable";
+import {useTranslation} from "react-i18next";
 
 
 export default function Details() {
@@ -21,6 +22,7 @@ export default function Details() {
     const [enteredTime, setEnteredTime] = useState<string>();
     const [selectedDays, setSelectedDays ] = useState<WeekdayType[]> ([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
+    const {t} = useTranslation()
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -120,8 +122,8 @@ export default function Details() {
 
             <View style={styles.container}>
                 <TextInput
-                    label={"message"}
-                    placeholder={"messageToShow"}
+                    label={t("description.label")}
+                    placeholder={t("description.placeholderTextFiled")}
                     onChangeText={text => setEnteredText(text)}
                     mode={'flat'}
                     theme={theme}
@@ -141,7 +143,7 @@ export default function Details() {
             </View>
             <View style={[styles.container, styles.saveContainer]}>
                 <Button mode={"contained"} style={styles.saveButton} onPress={handleSave}>
-                    <Text style={{width: "90%"}}>Save</Text>
+                    <Text style={{width: "90%"}}>{t("description.save")}</Text>
                 </Button>
             </View>
             <View style={[styles.container, styles.snackbarContainer]}>
