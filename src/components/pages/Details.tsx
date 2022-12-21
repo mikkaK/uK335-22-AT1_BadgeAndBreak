@@ -9,6 +9,7 @@ import StorageService from "../../services/StorageService";
 import {WeekdayType} from "../../types/WeekDayType";
 import moment, {Moment} from "moment";
 import {json} from "react-router-native";
+import {useTranslation} from "react-i18next";
 
 
 export default function Details({navigation, route}) {
@@ -20,6 +21,7 @@ export default function Details({navigation, route}) {
     const [enteredTime, setEnteredTime] = useState<Moment>();
     const [selectedDays, setSelectedDays] = useState<WeekdayType[]>([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
+    const {t} = useTranslation()
     const [errorText, setErrorText] = useState<string>("An undefined error occurred")
     const [allReminders, setAllReminders] = useState<ReminderType[]>()
     const styles = StyleSheet.create({
@@ -110,6 +112,43 @@ export default function Details({navigation, route}) {
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
 
+            <View style={styles.container}>
+                <TextInput
+                    label={t("description.label")}
+                    placeholder={t("description.placeholderTextFiled")}
+                    onChangeText={text => setEnteredText(text)}
+                    mode={'flat'}
+                    theme={theme}
+                    style={{height: "100%"}}
+                />
+            </View>
+            <View style={[styles.container, styles.clockContainer]}>
+                <CustomTimePicker initialVisibility={false}
+                                  handleConfirm={handleTimeConfirm}
+                />
+            </View>
+            <View style={styles.container}>
+                <WeekdayBar handleStateChange={handleWeekdayPress}/>
+            </View>
+            <View style={styles.container}>
+                <RepeatBar handleChange={handleRepeatChange}/>
+            </View>
+            <View style={[styles.container, styles.saveContainer]}>
+                <Button mode={"contained"} style={styles.saveButton} onPress={handleSave}>
+                    <Text style={{width: "90%"}}>{t("description.save")}</Text>
+                </Button>
+            </View>
+            <View style={[styles.container, styles.snackbarContainer]}>
+                <Snackbar
+                    visible={isSnackbarVisible}
+                    onDismiss={() => {
+                        setIsSnackbarVisible(false)
+                    }}
+                    style={{backgroundColor: theme.colors.error}}
+                >
+                    <Text style={{color: theme.colors.onError}}>Error</Text>
+                </Snackbar>
+            </View>
                 <View style={styles.container}>
                     <TextInput
                         label={"message"}

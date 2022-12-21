@@ -70,7 +70,7 @@ export default function Home({navigation}) {
             repeat: repeatEnum.DAILY_REPEAT,
             isActive: true
         }, {
-            id: 8,
+            id: 82,
             title: "Das ist noch ein Test",
             time: testMoment,
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
@@ -93,7 +93,7 @@ export default function Home({navigation}) {
             repeat: repeatEnum.DAILY_REPEAT,
             isActive: true
         }, {
-            id: 8,
+            id: 81,
             title: "Das ist noch ein Test",
             time: testMoment,
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
@@ -125,18 +125,19 @@ export default function Home({navigation}) {
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
                 <ScrollView style={styles.scrollView}>
-                    {reminders ?
-                        <>
-                            {reminders.map(reminder => (
-
-                                <Text>{JSON.stringify(reminder)}</Text>
-                            ))}
-                        </>
-
-                        :
-                        <>
-                        </>
-                    }
+                        {reminders.map(reminder => (
+                            <TouchableRipple
+                                onPress={() =>
+                                    navigation.navigate("Details",{reminder,reminders})}>
+                            <Card style={styles.card}>
+                                <Card.Content>
+                                    <Title>{reminder.id}</Title>
+                                    <Text>{t("description.time")}, {reminder.time}, {t("description." + reminder.repeat)}</Text>
+                                </Card.Content>
+                                <SwitchButton/>
+                            </Card>
+                            </TouchableRipple>
+                        ))}
                 </ScrollView>
                 <StatusBar style="auto"/>
                 <View style={styles.FABContainer}>

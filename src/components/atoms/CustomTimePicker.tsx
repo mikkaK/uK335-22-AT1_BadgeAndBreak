@@ -4,6 +4,7 @@ import {IconButton, useTheme} from 'react-native-paper';
 import {de, en, enGB, nl, registerTranslation, TimePickerModal} from "react-native-paper-dates";
 import "intl";
 import {Moment} from "moment";
+import {useTranslation} from "react-i18next";
 
 registerTranslation('en-GB', enGB);
 registerTranslation('de', de);
@@ -35,6 +36,7 @@ export default function CustomTimePicker(props: PropType) {
     const [modalIsVisible, setModalIsVisible] = useState(initialVisibility)
     const theme = useTheme();
     const currentTime = new Date();
+    const {t} = useTranslation()
     const [selectedHour, setSelectedHour] = useState<number>()
     const [selectedMinute, setSelectedMinute] = useState<number>()
 
@@ -74,6 +76,8 @@ export default function CustomTimePicker(props: PropType) {
                                          handleConfirm(hoursAndMinutes);
                                          setModalIsVisible(false);
                                      }}
+                                     label={t("description.enterTimeClock")}
+                                     cancelLabel = {t("description.cancel")}
                                      hours={selectedHour ? selectedHour : currentTime.getHours()}
                                      minutes={selectedMinute ? selectedMinute : currentTime.getMinutes()}
                                      uppercase={true}

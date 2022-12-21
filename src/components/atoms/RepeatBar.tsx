@@ -3,6 +3,7 @@ import {IconButton, useTheme} from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 import {useState} from "react";
 import Repeat from "../../config/Repeat";
+import {useTranslation} from "react-i18next";
 type PropType = {
     handleChange:( value:string ) => any;
     selectedValue?:string;
@@ -12,25 +13,26 @@ export default function (props:PropType) {
     const theme = useTheme();
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
     const [repeat, setRepeat] = useState<string>(selectedValue ? selectedValue : "never")
+    const {t} = useTranslation()
     const repeatOptions = [
         {
-            label: "Never",
+            label: t("description.never"),
             value: Repeat.NEVER_REPEAT,
         },
         {
-            label: "Daily",
+            label: t("description.daily"),
             value: Repeat.DAILY_REPEAT,
         },
         {
-            label: "Weekly",
+            label: t("description.weekly"),
             value: Repeat.WEEKLY_REPEAT,
         },
         {
-            label: "Monthly",
+            label: t("description.monthly"),
             value: Repeat.MONTHLY_REPEAT,
         },
         {
-            label: "Yearly",
+            label: t("description.yearly"),
             value: Repeat.YEARLY_REPEAT,
         }
     ]
