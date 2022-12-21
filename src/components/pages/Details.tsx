@@ -1,16 +1,14 @@
 import {useCallback, useEffect, useState} from "react";
-import {ImageBackground, KeyboardAvoidingView, StyleSheet, Text, View} from "react-native";
+import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import {Button, Snackbar, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
 import RepeatBar from "../atoms/RepeatBar";
 import {ReminderType} from "../../types/models/Reminders.models";
 import StorageService from "../../services/StorageService";
-import weekDayEnum from "../../config/WeekDays";
 import {WeekdayType} from "../../types/WeekDayType";
-import Repeat from "../../config/Repeat";
-import useThenable from "@react-navigation/native/lib/typescript/src/useThenable";
 import {useTranslation} from "react-i18next";
+import SnackbarContent from "../molecules/Snackbar";
 
 
 export default function Details() {
@@ -22,6 +20,7 @@ export default function Details() {
     const [enteredTime, setEnteredTime] = useState<string>();
     const [selectedDays, setSelectedDays ] = useState<WeekdayType[]> ([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
+    const [snackbarMessage,setSnackbarMessage] = useState<string>("Error")
     const {t} = useTranslation()
     const styles = StyleSheet.create({
         container: {
@@ -147,15 +146,7 @@ export default function Details() {
                 </Button>
             </View>
             <View style={[styles.container, styles.snackbarContainer]}>
-                <Snackbar
-                    visible={isSnackbarVisible}
-                    onDismiss={() => {
-                        setIsSnackbarVisible(false)
-                    }}
-                    style={{backgroundColor: theme.colors.error}}
-                >
-                    <Text style={{color: theme.colors.onError}}>Error</Text>
-                </Snackbar>
+                <SnackbarContent message={snackbarMessage} visibility={isSnackbarVisible} setVisibility={setIsSnackbarVisible}/>
             </View>
             </ImageBackground>
         </>);

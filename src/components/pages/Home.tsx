@@ -1,4 +1,4 @@
-import {Card, Title, TouchableRipple} from 'react-native-paper';
+import {Card, Snackbar, Title, TouchableRipple,useTheme} from 'react-native-paper';
 import {StatusBar} from 'expo-status-bar';
 import {ImageBackground, ScrollView, Text, View} from 'react-native';
 import {useEffect, useState} from 'react';
@@ -10,18 +10,21 @@ import {styles} from '../../styles/home.styles';
 import {useTranslation} from "react-i18next";
 import StorageService from "../../services/StorageService";
 import SwitchButton from "../atoms/toggleSwitch";
+import SnackbarContent from "../molecules/Snackbar";
 
 
 export default function Home({navigation}) {
     const {t} = useTranslation()
+    const theme = useTheme();
     const {storeData, getData} = StorageService;
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
     const [reminders, setRemiders] = useState<ReminderType[]>([
         {
             id: 1,
             title: "Das ist ein Test",
             time: "12:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.DAILY_REPEAT,
+            repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: true,
         }, {
             id: 2,
@@ -36,7 +39,7 @@ export default function Home({navigation}) {
             title: "Das ist ein Test",
             time: "12:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.DAILY_REPEAT,
+            repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: true
         }, {
             id: 4,
@@ -51,7 +54,7 @@ export default function Home({navigation}) {
             title: "Das ist ein Test",
             time: "12:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.DAILY_REPEAT,
+            repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: true
         }, {
             id: 6,
@@ -66,7 +69,7 @@ export default function Home({navigation}) {
             title: "Das ist ein Test",
             time: "12:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.DAILY_REPEAT,
+            repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: true
         }, {
             id: 82,
@@ -89,7 +92,7 @@ export default function Home({navigation}) {
             title: "Das ist ein Test",
             time: "12:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.DAILY_REPEAT,
+            repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: true
         }, {
             id: 81,
@@ -108,12 +111,16 @@ export default function Home({navigation}) {
             isActive: false
         }
     ])
+    function deleteReminder(reminder: ReminderType) {
+        setRemiders(reminders.filter((reminderToDelete)=> reminderToDelete.id !== reminder.id))
+    }
 
     useEffect(()=>{
         if(reminders.length === 0){
             setRemiders([])
         }else {
             storeData("allReminders", reminders.toString())
+
         }
     }, [])
 
@@ -126,14 +133,17 @@ export default function Home({navigation}) {
                         {reminders.map(reminder => (
                             <TouchableRipple
                                 onPress={() =>
-                                    navigation.navigate("Details",{reminder,reminders})}>
+                                    navigation.navigate("Details",{reminder,reminders})}
+                                onLongPress={() => { deleteReminder(reminder), setIsSnackbarVisible(true)}}>
                             <Card style={styles.card}>
                                 <Card.Content>
-                                    <Title>{reminder.id}</Title>
+                                    <Title>{reminder.title}</Title>
                                     <Text>{t("description.time")}, {reminder.time}, {t("description." + reminder.repeat)}</Text>
                                 </Card.Content>
                                 <SwitchButton/>
+
                             </Card>
+
                             </TouchableRipple>
                         ))}
                 </ScrollView>
@@ -141,6 +151,7 @@ export default function Home({navigation}) {
                 <View style={styles.FABContainer}>
                 <AddNewReminderFAB navigation={navigation} reminders={reminders}/>
                 </View>
+                <SnackbarContent message={ t("description.deleteMessage")} visibility={isSnackbarVisible} setVisibility={setIsSnackbarVisible}/>
             </ImageBackground>
         </View>
 

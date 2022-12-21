@@ -17,6 +17,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      "@notifee/react-native"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -25,8 +28,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "softwareKeyboardLayoutMode": "pan"
-
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "breakAndBadge.com"
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -10,7 +10,6 @@
     "save": "save",
     "time": "Time:",
     "never": "Never",
-    "daily": "Daily",
     "weekly": "Weekly",
     "monthly": "Monthly",
     "yearly": "Yearly",
@@ -21,6 +20,7 @@
     "FR": "FR",
     "SA": "SA",
     "SU": "SU",
+    "deleteMessage": "The reminder got deleted",
     "errorMessageFillAllFields": "All fields need a value!",
     "errorMessageInvalidTime": "Please enter a valid time",
     "test": "This is english"

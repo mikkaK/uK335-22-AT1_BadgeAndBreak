@@ -10,7 +10,6 @@
   "save": "Speichern",
   "time": "Zeit:",
   "never": "Niemals",
-  "daily": "Täglich",
   "weekly": "Wöchentlich",
   "monthly": "Monatlich",
   "yearly": "Jährlich",
@@ -21,6 +20,7 @@
   "FR": "FR",
   "SA": "SA",
   "SU": "SO",
+  "deleteMessage": "Die Erinnerung wurde gelöscht",
   "errorMessageFillAllFields": "Alle Felder müssen ausgefüllt werden!",
   "errorMessageInvalidTime": "Bitte geben Sie eine valide Zeit ein",
   "test": "Das ist Deutsch"
