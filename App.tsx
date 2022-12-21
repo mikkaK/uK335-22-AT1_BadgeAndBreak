@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import {
@@ -11,6 +10,8 @@ import {NativeRouter} from "react-router-native";
 import {useEffect} from "react";
 import StorageService from "./src/services/StorageService";
 import {ReminderType} from "./src/types/models/Reminders.models";
+import {useTranslation} from "react-i18next";
+import "./src/config/i18n/config";
 
 // on top of your index.android.js file
 const isAndroid = require('react-native').Platform.OS === 'android'; // this line is only needed if you don't use an .android.js file
@@ -80,6 +81,7 @@ const Stack = createStackNavigator<RootStackParamList>()
 export default function App() {
   const allReminders:ReminderType[] = [{} as ReminderType]
   const {storeData} = StorageService
+  const {t} = useTranslation();
 
   useEffect(() => {
     storeData("allReminders", allReminders.toString());
@@ -98,12 +100,12 @@ export default function App() {
           <Stack.Screen
           name="Details"
           component={Details}
-          options={{ title: "Edit" }}
+          options={{ title: t("description.details") }}
           />
           <Stack.Screen
           name="Home"
           component={Home}
-          options={{ title: "Reminders" }}
+          options={{ title: t('description.reminders')}}
           />
         </Stack.Navigator>
       </NavigationContainer>
@@ -112,13 +114,4 @@ export default function App() {
 
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 

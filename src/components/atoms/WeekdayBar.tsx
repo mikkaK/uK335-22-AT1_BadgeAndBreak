@@ -3,6 +3,7 @@ import {Avatar, TouchableRipple, useTheme} from "react-native-paper";
 import WeekDays from "../../config/WeekDays";
 import {useState} from "react";
 import {WeekdayType} from "../../types/WeekDayType";
+import {useTranslation} from "react-i18next";
 
 type PropType = {
     handleStateChange: (stateAndValue : {
@@ -14,34 +15,35 @@ type PropType = {
 export default function (props:PropType) {
     const theme = useTheme();
     const {handleStateChange} = props;
+    const {t} = useTranslation()
     const [weekdays, setWeekdays] = useState<WeekdayType[]>([
         {
             isSelected: false,
-            value: WeekDays.MONDAY
+            value: t("description." + WeekDays.MONDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.TUESDAY
+            value: t("description." + WeekDays.TUESDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.WEDNESDAY
+            value: t("description." + WeekDays.WEDNESDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.THURSDAY
+            value: t("description." + WeekDays.THURSDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.FRIDAY
+            value: t("description." + WeekDays.FRIDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.SATURDAY
+            value: t("description." + WeekDays.SATURDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.SUNDAY
+            value: t("description." + WeekDays.SUNDAY)
         }
     ])
     const styles = StyleSheet.create({

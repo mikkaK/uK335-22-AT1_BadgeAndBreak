@@ -1,0 +1,29 @@
+{
+  "translation": {
+  "description": {
+    "reminders": "Reminders",
+    "details": "Reminder page",
+    "placeholderTextFiled": "Text of your reminder",
+    "label": "Title",
+    "enterTimeClock": "Enter Time",
+    "cancel": "cancel",
+    "save": "save",
+    "time": "Time:",
+    "never": "Never",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "MO": "MO",
+    "TU": "TU",
+    "WE": "WE",
+    "TH": "TH",
+    "FR": "FR",
+    "SA": "SA",
+    "SU": "SU",
+    "errorMessageFillAllFields": "All fields need a value!",
+    "errorMessageInvalidTime": "Please enter a valid time",
+    "test": "This is english"
+  }
+}
+}
