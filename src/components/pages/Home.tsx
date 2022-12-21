@@ -1,6 +1,6 @@
-import {Card, Paragraph, Title} from 'react-native-paper';
+import {Card, Title} from 'react-native-paper';
 import {StatusBar} from 'expo-status-bar';
-import {ImageBackground, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ImageBackground, ScrollView, Text, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import {ReminderType} from '../../types/models/Reminders.models';
 import weekDayEnum from '../../config/WeekDays';
@@ -9,7 +9,6 @@ import AddNewReminderFAB from '../atoms/addNewReminderFAB';
 import {styles} from '../../styles/home.styles';
 import EditIconButton from '../atoms/editIconButton';
 import {useTranslation} from "react-i18next";
-import {NativeRouter} from "react-router-native";
 import StorageService from "../../services/StorageService";
 
 
@@ -127,7 +126,7 @@ export default function Home({navigation}) {
                         {reminders.map(reminders => (
                             <Card style={styles.card}>
                                 <Card.Content>
-                                    <Title>{reminders.title}</Title>
+                                    <Title>{reminders.id}</Title>
                                     <Text>Zeit: {reminders.time}, {reminders.repeat}</Text>
                                 </Card.Content>
                                 <EditIconButton/>

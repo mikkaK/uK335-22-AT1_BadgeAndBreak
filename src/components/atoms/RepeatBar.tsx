@@ -3,12 +3,15 @@ import {IconButton, useTheme} from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 import {useState} from "react";
 import Repeat from "../../config/Repeat";
-
-export default function () {
+type PropType = {
+    handleChange:( value:string ) => any;
+}
+export default function (props:PropType) {
+    const { handleChange } = props;
     const theme = useTheme();
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
     const [repeat, setRepeat] = useState<string>("never")
-    const [repeatOptions, setRepeatOptions] = useState( [
+    const repeatOptions = [
         {
             label: "Never",
             value: Repeat.NEVER_REPEAT,
@@ -29,7 +32,7 @@ export default function () {
             label: "Yearly",
             value: Repeat.YEARLY_REPEAT,
         }
-    ])
+    ]
 
     const styles = StyleSheet.create({
         container: {
@@ -73,7 +76,10 @@ export default function () {
                         setShowDropDown(true)
                     }}
                     value={repeat}
-                    setValue={setRepeat}
+                    setValue={(_value:string) => {
+                        setRepeat(_value);
+                        handleChange(_value);
+                    }}
                     list={repeatOptions}
                     theme={theme}
                 />

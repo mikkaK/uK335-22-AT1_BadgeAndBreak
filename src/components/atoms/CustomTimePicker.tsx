@@ -1,9 +1,10 @@
-import { useCallback, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { TextInput, useTheme, IconButton } from 'react-native-paper';
-import { TimePicker, TimePickerModal } from "react-native-paper-dates";
-import {en, de, nl, enGB, registerTranslation} from 'react-native-paper-dates'
+import {useCallback, useEffect, useState} from "react";
+import {View, StyleSheet} from "react-native";
+import {TextInput, useTheme, IconButton} from 'react-native-paper';
+import {TimePicker, TimePickerModal, en, de, nl, enGB, registerTranslation} from "react-native-paper-dates";
 import "intl";
+import StorageService from "../../services/StorageService";
+
 registerTranslation('en-GB', enGB);
 registerTranslation('de', de);
 registerTranslation('en', en);
@@ -11,12 +12,14 @@ registerTranslation('nl', nl);
 
 type PropType = {
     initialVisibility: boolean;
-    handleTimeChange: () => void;
-    handleConfirm: () => void;
+    handleConfirm: (hoursAndMinutes: {
+        hours: number;
+        minutes: number;
+    }) => any;
 }
 
 const styles = StyleSheet.create({
-        timeKeyboardContainer: {
+    timeKeyboardContainer: {
         flex: 2,
         justifyContent: "center",
         //backgroundColor: "red"
@@ -28,40 +31,42 @@ const styles = StyleSheet.create({
         //backgroundColor : "blue"
     }
 })
-export default function CustomTimePicker (props: PropType) {
-    const { initialVisibility, handleTimeChange, handleConfirm } = props;
+export default function CustomTimePicker(props: PropType) {
+    const {initialVisibility, handleConfirm} = props;
     const [modalIsVisible, setModalIsVisible] = useState(initialVisibility)
     const theme = useTheme();
     const currentTime = new Date();
-    const [enteredTime, setEnteredTime] = useState();
-        const onDismiss = useCallback(() => {
+
+
+
+    const handleDismiss = useCallback(() => {
         setModalIsVisible(false)
     }, [setModalIsVisible])
 
 
-
     return (
-    <>
-    <View style={styles.timeKeyboardContainer}>
-    <TimePicker
-        inputType={"keyboard"}
-        focused={"hours"}
-        onFocusInput={handleTimeChange}
-        onChange={handleTimeChange}
-        hours={currentTime.getHours()}
-        minutes={currentTime.getMinutes()}
-    />
-    </View>
-    <View style={styles.timeClockIconContainer}>
-        <IconButton
-            icon="clock"
-            size={70}
-            iconColor={theme.colors.onPrimary}
-            onPress={() => setModalIsVisible(true)}/>
-    </View>
-    <TimePickerModal visible={modalIsVisible}
-        onDismiss={onDismiss}
-        onConfirm={handleConfirm}
-        />
-    </>);
+        <>
+            <View style={styles.timeKeyboardContainer}>
+                <View style={styles.timeClockIconContainer}>
+                    <IconButton
+                        icon="clock"
+                        size={70}
+                        iconColor={theme.colors.onPrimary}
+                        onPress={() => setModalIsVisible(true)}/>
+
+                    <TimePickerModal visible={modalIsVisible}
+                                     onDismiss={handleDismiss}
+                                     onConfirm={(hoursAndMinutes) => {
+                                         handleConfirm(hoursAndMinutes);
+                                         setModalIsVisible(false);
+                                     }}
+                                     hours={currentTime.getHours()}
+                                     minutes={currentTime.getMinutes()}
+                                     uppercase={true}
+                                     animationType={"fade"}
+                    />
+                </View>
+            </View>
+        </>
+    );
 }
