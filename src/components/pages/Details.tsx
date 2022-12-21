@@ -10,6 +10,7 @@ import {WeekdayType} from "../../types/WeekDayType";
 import moment, {Moment} from "moment";
 import {useTranslation} from "react-i18next";
 import SnackbarContent from "../molecules/Snackbar";
+import {useIsFocused} from "@react-navigation/native";
 
 export default function Details({navigation, route}) {
     const theme = useTheme();
@@ -24,6 +25,7 @@ export default function Details({navigation, route}) {
     const [errorText, setErrorText] = useState<string>("An undefined error occurred")
     const [allReminders, setAllReminders] = useState<ReminderType[]>()
     const {storeData, getData} = StorageService;
+    const isFocused = useIsFocused();
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -57,17 +59,16 @@ export default function Details({navigation, route}) {
         if (route.params.reminder) {
             setSelectedReminder(route.params.reminder)
         }
-        setAllReminders(route.params.reminders)
-
-    }, [])
+        setAllReminders([route.params.reminders])
+    }, [isFocused])
 
     const handleSave = () => {
         let idOfLastIndex = 0;
-        if (allReminders.length !== 0) {
-            const sortedReminders = [...allReminders].sort((r1, r2) => (r1.id < r2.id) ? 1 : (r1.id > r2.id) ? -1 : 0)
-            idOfLastIndex = sortedReminders[0].id
-        }
-        //todo fix spread operator error
+        console.log("type of allReminders", allReminders)
+        if ( allReminders !== undefined && allReminders.length !== 0)
+            allReminders.sort((a,b) => (a.id > b.id ? 1 : -1));
+            idOfLastIndex = allReminders[0].id
+
         if (selectedDays.length && enteredText && enteredTime) {
             setIsSnackbarVisible(false)
             const tempReminder: ReminderType = {
@@ -78,13 +79,8 @@ export default function Details({navigation, route}) {
                 time: enteredTime,
                 title: enteredText
             }
-            if (allReminders.length !== 0) {
-                storeData("allReminders", JSON.stringify(tempReminder)).then(() => navigation.navigate("Home"));
-
-            }else{
-                storeData("allReminders", JSON.stringify([...allReminders, tempReminder])).then(() => navigation.navigate("Home"));
-            }
-
+            allReminders.push(tempReminder)
+                storeData("allReminders", JSON.stringify(allReminders)).then(() => navigation.navigate("Home"));
         } else {
             setErrorText("Please fill out every field")
             setIsSnackbarVisible(true)
@@ -126,6 +122,7 @@ export default function Details({navigation, route}) {
                         theme={theme}
                         style={{height: "100%"}}
                         defaultValue={enteredText}
+                        maxLength={15}
                     />
                 </View>
                 <View style={[styles.container, styles.clockContainer]}>

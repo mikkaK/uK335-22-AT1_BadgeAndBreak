@@ -19,9 +19,14 @@ const getData = async (key: string) => {
     }
 };
 
+const clearData = async () => {
+    await AsyncStorage.clear();
+}
+
 const StorageService = {
     storeData,
     getData,
+    clearData
 };
 
 export default StorageService;

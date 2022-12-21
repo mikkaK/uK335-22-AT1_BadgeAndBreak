@@ -18,20 +18,20 @@ export default function Home({navigation}) {
     const theme = useTheme();
     const {storeData, getData } = StorageService;
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
-    const [reminders, setRemiders] = useState<ReminderType[]>([])
+    const [reminders, setRemiders] = useState<ReminderType[]>()
+    const isFocused = useIsFocused();
 
     function deleteReminder(reminder: ReminderType) {
         setRemiders(reminders.filter((reminderToDelete)=> reminderToDelete.id !== reminder.id))
         storeData("allReminders", JSON.stringify(reminder));
     }
 
-    const isFocused = useIsFocused();
-
     useEffect(() => {
         getData("allReminders").then(value => {
             setRemiders(JSON.parse(value))
+            console.log("reminders on homepage", reminders.flat())
         })
-        console.log("reminders on homepage", reminders)
+
     }, [isFocused])
     return (
 
@@ -39,7 +39,7 @@ export default function Home({navigation}) {
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
                 <ScrollView style={styles.scrollView}>
-                    {reminders.length < 1 ?
+                    {reminders !== undefined && reminders.length !== 0 ?
                         <>
                         {reminders.map(reminder => (
                             <TouchableRipple
