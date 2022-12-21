@@ -50,7 +50,9 @@ if (isAndroid) {
     require('@formatjs/intl-datetimeformat/add-golden-tz.js');
 
 
-    // https://formatjs.io/docs/polyfills/intl-datetimeformat/#default-timezone
+    /**
+     * https://formatjs.io/docs/polyfills/intl-datetimeformat/#default-timezone
+      */
 
     if ('__setDefaultTimeZone' in Intl.DateTimeFormat) {
         Intl.DateTimeFormat.__setDefaultTimeZone(
