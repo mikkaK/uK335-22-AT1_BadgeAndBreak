@@ -77,8 +77,6 @@ const theme = {
 
 const Stack = createStackNavigator<RootStackParamList>()
 
-
-
 export default function App() {
   const allReminders:ReminderType[] = [{} as ReminderType]
   const {storeData} = StorageService
@@ -86,11 +84,17 @@ export default function App() {
   useEffect(() => {
     storeData("allReminders", allReminders.toString());
   },[])
+
+  const globalScreenOptions = {
+    headerStyle: { backgroundColor: theme.colors.primary },
+    headerTintColor: theme.colors.onPrimary,
+  };
+
   return (
       <NativeRouter>
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Home" screenOptions={globalScreenOptions}>
           <Stack.Screen
           name="Details"
           component={Details}
@@ -108,4 +112,13 @@ export default function App() {
 
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
 

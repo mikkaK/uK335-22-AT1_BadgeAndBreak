@@ -12,7 +12,6 @@ i18n
     resources: {
         de:{
             translation:{
-                yourReminders: "Deine Erinnerugnen",
                 placeholderTextFiled: "Titel der Erinnerung",
                 enterTimeClock: "Zeit eingeben",
                 cancel: "Abbrechen",
@@ -31,11 +30,11 @@ i18n
                 SU:"SO",
                 errorMessageFillAllFields:"Alle Felder müssen ausgefüllt werden!",
                 errorMessageInvalidTime:"Bitte geben Sie eine valide Zeit ein",
+                test:"Das ist Deutsch",
             },
         },
         en:{
             translation:{
-                yourReminders: "Your Reminders",
                 placeholderTextFiled: "title of your reminder",
                 enterTimeClock: "Enter Time",
                 cancel: "cancel",
@@ -54,6 +53,7 @@ i18n
                 SU:"SU",
                 errorMessageFillAllFields:"All fields need a value!",
                 errorMessageInvalidTime:"Please enter a valid time",
+                test:"This is english",
             },
         },
         },

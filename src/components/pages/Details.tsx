@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {KeyboardAvoidingView, StyleSheet, Text, View} from "react-native";
 import {Button, Snackbar, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
@@ -118,6 +118,9 @@ export default function Details() {
 
     return (
         <>
+            <ImageBackground source={require('./../../../assets/background.png')}
+                             style={{width: '100%', height: '100%'}}>
+
             <View style={styles.container}>
                 <TextInput
                     label={"message"}
@@ -157,5 +160,6 @@ export default function Details() {
                     <Text style={{color: theme.colors.onError}}>{errorText}</Text>
                 </Snackbar>
             </View>
+            </ImageBackground>
         </>);
 }
