@@ -4,6 +4,7 @@ import WeekDays from "../../config/WeekDays";
 import {useState} from "react";
 import {WeekdayType} from "../../types/WeekDayType";
 import {useTranslation} from "react-i18next";
+import {styles} from "../../styles/weekdayBar.styles"
 
 type PropType = {
     handleStateChange: (stateAndValue : {
@@ -11,9 +12,11 @@ type PropType = {
         value: string
     }) => any;
 }
-
+/**
+ *
+ * @param props
+ */
 export default function (props:PropType) {
-    const theme = useTheme();
     const {handleStateChange} = props;
     const {t} = useTranslation()
     const [weekdays, setWeekdays] = useState<WeekdayType[]>([
@@ -46,35 +49,11 @@ export default function (props:PropType) {
             value: t("description." + WeekDays.SUNDAY)
         }
     ])
-    const styles = StyleSheet.create({
-        container: {
-            flexDirection: "row",
-            height: "100%",
-            alignItems: "center",
-            justifyContent: "center"
-        },
-        item: {
-            flex: 1,
-            marginLeft: "1.5%",
-            shadowOpacity: 1,
-            shadowRadius: 2,
-            shadowColor: "#000000",
-            shadowOffset: {width: 1, height: 0.5},
 
-        },
-        button: {
-            backgroundColor: theme.colors.primaryContainer,
-
-        },
-        buttonSelected: {
-            backgroundColor: theme.colors.secondary,
-            borderColor: "#000000",
-            border: "solid",
-            borderRadius: 50,
-            borderWidth: 1
-        }
-    })
-
+    /**
+     *
+     * @param item
+     */
     const handlePress =(item:WeekdayType) => {
         const { value } = item;
         let weekdaysCopy = [...weekdays]

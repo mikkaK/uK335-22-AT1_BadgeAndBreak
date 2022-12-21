@@ -1,16 +1,14 @@
 import {useCallback, useEffect, useState} from "react";
-import {ImageBackground, KeyboardAvoidingView, StyleSheet, Text, View} from "react-native";
+import {ImageBackground, Text, View} from "react-native";
 import {Button, Snackbar, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
 import RepeatBar from "../atoms/RepeatBar";
 import {ReminderType} from "../../types/models/Reminders.models";
 import StorageService from "../../services/StorageService";
-import weekDayEnum from "../../config/WeekDays";
 import {WeekdayType} from "../../types/WeekDayType";
-import Repeat from "../../config/Repeat";
-import useThenable from "@react-navigation/native/lib/typescript/src/useThenable";
 import {useTranslation} from "react-i18next";
+import {styles} from '../../styles/detail.styles';
 
 
 export default function Details() {
@@ -23,33 +21,8 @@ export default function Details() {
     const [selectedDays, setSelectedDays ] = useState<WeekdayType[]> ([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
     const {t} = useTranslation()
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: theme.colors.primary,
-            marginBottom: "5%",
-            marginRight: "5%",
-            marginLeft: "5%",
-        },
-        clockContainer: {
-            flex: 3,
-            justifyContent: "center",
-            alignItems: "center"
-        },
-        snackbarContainer: {
-            flex: 1.5,
-            backgroundColor: "transparent"
-        },
-        saveContainer: {
-            backgroundColor: "transparent",
-            justifyContent: "center",
-            alignItems: "center",
-        },
-        saveButton: {
-            minWidth: "50%"
-        },
-        snackbar: {}
-    })
+
+
 
 
     useEffect(() => {

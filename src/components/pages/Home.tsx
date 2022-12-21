@@ -11,7 +11,11 @@ import {useTranslation} from "react-i18next";
 import StorageService from "../../services/StorageService";
 import SwitchButton from "../atoms/toggleSwitch";
 
-
+/**
+ *
+ * @param navigation
+ * @constructor
+ */
 export default function Home({navigation}) {
     const {t} = useTranslation()
     const {storeData, getData} = StorageService;
@@ -118,7 +122,6 @@ export default function Home({navigation}) {
     }, [])
 
     return (
-
         <View style={styles.container}>
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>

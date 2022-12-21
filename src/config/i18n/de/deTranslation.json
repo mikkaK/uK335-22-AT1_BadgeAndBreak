@@ -1,28 +1,30 @@
 {
-  "translation":{
-"description":{
-  "reminders": "Erinerungen",
-  "details": "Erinerungsseite",
-  "placeholderTextFiled": "Text der Erinnerung",
-  "label": "Titel",
-  "enterTimeClock": "Zeit eingeben",
-  "cancel": "Abbrechen",
-  "save": "Speichern",
-  "time": "Zeit:",
-  "never": "Niemals",
-  "daily": "Täglich",
-  "weekly": "Wöchentlich",
-  "monthly": "Monatlich",
-  "yearly": "Jährlich",
-  "MO": "MO",
-  "TU": "DI",
-  "WE": "MI",
-  "TH": "DO",
-  "FR": "FR",
-  "SA": "SA",
-  "SU": "SO",
-  "errorMessageFillAllFields": "Alle Felder müssen ausgefüllt werden!",
-  "errorMessageInvalidTime": "Bitte geben Sie eine valide Zeit ein",
-  "test": "Das ist Deutsch"
+  "translation": {
+    "description": {
+      "reminders": "Erinerungen",
+      "details": "Erinerungsseite",
+      "placeholderTextFiled": "Text der Erinnerung",
+      "label": "Titel",
+      "enterTimeClock": "Zeit eingeben",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "time": "Zeit:",
+      "never": "Niemals",
+      "daily": "Täglich",
+      "weekly": "Wöchentlich",
+      "monthly": "Monatlich",
+      "yearly": "Jährlich",
+      "MO": "MO",
+      "TU": "DI",
+      "WE": "MI",
+      "TH": "DO",
+      "FR": "FR",
+      "SA": "SA",
+      "SU": "SO",
+      "reminderCreated": "Erinnerung wurde erstellt",
+      "errorMessageFillAllFields": "Alle Felder müssen ausgefüllt werden",
+      "errorMessageInvalidTime": "Bitte geben Sie eine valide Zeit ein",
+      "test": "Das ist Deutsch"
+    }
+  }
 }
-}}

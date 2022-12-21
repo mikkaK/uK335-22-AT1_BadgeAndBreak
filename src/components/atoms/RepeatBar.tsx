@@ -1,12 +1,17 @@
-import {Button, StatusBar, StyleSheet, View} from "react-native";
+import { StyleSheet, View} from "react-native";
 import {IconButton, useTheme} from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 import {useState} from "react";
 import Repeat from "../../config/Repeat";
 import {useTranslation} from "react-i18next";
+import {styles} from "../../styles/repeatBar.styles"
 type PropType = {
     handleChange:( value:string ) => any;
 }
+/**
+ *
+ * @param props
+ */
 export default function (props:PropType) {
     const { handleChange } = props;
     const theme = useTheme();
@@ -35,28 +40,6 @@ export default function (props:PropType) {
             value: Repeat.YEARLY_REPEAT,
         }
     ]
-
-    const styles = StyleSheet.create({
-        container: {
-            flexDirection: "row",
-            height: "100%",
-            alignItems: "center",
-            justifyContent: "center"
-        },
-        items: {},
-        dropdown: {
-            flex: 4,
-        },
-        repeatIcon: {
-            flex: 1,
-            alignItems: "center"
-        },
-        dropDownIcon: {
-            flex: 1,
-            alignItems: "center"
-        }
-
-    })
 
     return (
         <View style={styles.container}>
