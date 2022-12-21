@@ -1,20 +1,20 @@
-import {Card} from 'react-native-paper';
+import {Card, Title, TouchableRipple} from 'react-native-paper';
 import {StatusBar} from 'expo-status-bar';
-import {ImageBackground, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useState} from 'react';
+import {ImageBackground, ScrollView, Text, View} from 'react-native';
+import {useEffect, useState} from 'react';
 import {ReminderType} from '../../types/models/Reminders.models';
 import weekDayEnum from '../../config/WeekDays';
 import repeatEnum from '../../config/Repeat';
 import AddNewReminderFAB from '../atoms/addNewReminderFAB';
 import {styles} from '../../styles/home.styles';
-import EditIconButton from '../atoms/editIconButton';
 import {useTranslation} from "react-i18next";
-import {NativeRouter} from "react-router-native";
+import StorageService from "../../services/StorageService";
+import SwitchButton from "../atoms/toggleSwitch";
 
 
 export default function Home({navigation}) {
     const {t} = useTranslation()
-
+    const {storeData, getData} = StorageService;
     const [reminders, setRemiders] = useState<ReminderType[]>([
         {
             id: 1,
@@ -109,6 +109,13 @@ export default function Home({navigation}) {
         }
     ])
 
+    useEffect(()=>{
+        if(reminders.length === 0){
+            setRemiders([])
+        }else {
+            storeData("allReminders", reminders.toString())
+        }
+    }, [])
 
     return (
 
@@ -117,11 +124,17 @@ export default function Home({navigation}) {
                              style={{width: '100%', height: '100%'}}>
                 <ScrollView style={styles.scrollView}>
                         {reminders.map(reminders => (
+                            <TouchableRipple
+                                onPress={() =>
+                                    navigation.navigate("Details",{reminders})}>
                             <Card style={styles.card}>
-                                <Card.Title title={reminders.id}>
-                                </Card.Title>
-                                <EditIconButton/>
+                                <Card.Content>
+                                    <Title>{reminders.id}</Title>
+                                    <Text>Zeit: {reminders.time}, {reminders.repeat}</Text>
+                                </Card.Content>
+                                <SwitchButton/>
                             </Card>
+                            </TouchableRipple>
                         ))}
                 </ScrollView>
                 <StatusBar style="auto"/>
