@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
         marginBottom: "5%",
         marginTop: "2%",
         width: "90%",
+        minHeight:"10%",
         //TODO min max stuff damit nicht kacke
 
     },
@@ -43,7 +44,7 @@ export const styles = StyleSheet.create({
       flex:9
     },
     FABContainer: {
-        flex:0.18
+        flex:0.19
     },
     fabView: {
         position: 'absolute',

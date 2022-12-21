@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import {ImageBackground, StyleSheet, View} from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import {
@@ -74,11 +74,17 @@ const theme = {
 const Stack = createStackNavigator<RootStackParamList>()
 
 export default function App() {
+
+  const globalScreenOptions = {
+    headerStyle: { backgroundColor: theme.colors.primary },
+    headerTintColor: theme.colors.onPrimary,
+  };
+
   return (
       <NativeRouter>
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Home" screenOptions={globalScreenOptions}>
           <Stack.Screen
           name="Details"
           component={Details}
@@ -88,12 +94,12 @@ export default function App() {
           name="Home"
           component={Home}
           options={{ title: "Reminders" }}
+
           />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
 </NativeRouter>
-
   );
 }
 
