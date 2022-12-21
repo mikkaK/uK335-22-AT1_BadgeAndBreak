@@ -119,7 +119,6 @@ export default function Details() {
                              style={{width: '100%', height: '100%'}}>
 
             <View style={styles.container}>
-            <View style={styles.container}>
                 <TextInput
                     label={"message"}
                     placeholder={"messageToShow"}
@@ -155,7 +154,6 @@ export default function Details() {
                 >
                     <Text style={{color: theme.colors.onError}}>Error</Text>
                 </Snackbar>
-            </View>
             </View>
             </ImageBackground>
         </>);

@@ -1,4 +1,4 @@
-import {Card, Title} from 'react-native-paper';
+import {Card, Title, TouchableRipple} from 'react-native-paper';
 import {StatusBar} from 'expo-status-bar';
 import {ImageBackground, ScrollView, Text, View} from 'react-native';
 import {useEffect, useState} from 'react';
@@ -7,9 +7,9 @@ import weekDayEnum from '../../config/WeekDays';
 import repeatEnum from '../../config/Repeat';
 import AddNewReminderFAB from '../atoms/addNewReminderFAB';
 import {styles} from '../../styles/home.styles';
-import EditIconButton from '../atoms/editIconButton';
 import {useTranslation} from "react-i18next";
 import StorageService from "../../services/StorageService";
+import SwitchButton from "../atoms/toggleSwitch";
 
 
 export default function Home({navigation}) {
@@ -124,13 +124,17 @@ export default function Home({navigation}) {
                              style={{width: '100%', height: '100%'}}>
                 <ScrollView style={styles.scrollView}>
                         {reminders.map(reminders => (
+                            <TouchableRipple
+                                onPress={() =>
+                                    navigation.navigate("Details",{reminders})}>
                             <Card style={styles.card}>
                                 <Card.Content>
                                     <Title>{reminders.id}</Title>
                                     <Text>Zeit: {reminders.time}, {reminders.repeat}</Text>
                                 </Card.Content>
-                                <EditIconButton/>
+                                <SwitchButton/>
                             </Card>
+                            </TouchableRipple>
                         ))}
                 </ScrollView>
                 <StatusBar style="auto"/>
