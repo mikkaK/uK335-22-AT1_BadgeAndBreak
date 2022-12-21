@@ -1,12 +1,14 @@
 import { StyleSheet} from 'react-native';
 import {transparent} from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export const styles = StyleSheet.create({
     container: {
-      flex:1,
+      flexGrow:1,
       alignItems: 'center',
       justifyContent: "center",
       flexDirection: 'row'
+      
     },
     card: {
         backgroundColor: 'pink',   
@@ -15,7 +17,7 @@ export const styles = StyleSheet.create({
         marginBottom: "5%",
         marginTop: "2%",
         width: "90%",
-        minHeight:"10%",
+       /* maxHeight:"5000%",*/
         //TODO min max stuff damit nicht kacke
 
     },
@@ -40,7 +42,9 @@ export const styles = StyleSheet.create({
 
 
     }, scrollView: {
-      flex:9
+      flex:1,
+ 
+
     },
     FABContainer: {
         flex:0.19

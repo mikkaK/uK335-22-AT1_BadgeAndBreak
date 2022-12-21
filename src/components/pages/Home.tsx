@@ -77,7 +77,7 @@ export default function Home({navigation}) {
             isActive: false
         }
         , {
-            id: 6,
+            id: 9,
             title: "Das ist noch ein Test",
             time: "13:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
@@ -85,7 +85,7 @@ export default function Home({navigation}) {
             isActive: false
         },
         {
-            id: 7,
+            id: 10,
             title: "Das ist ein Test",
             time: "12:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
@@ -98,9 +98,35 @@ export default function Home({navigation}) {
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: false
-        }
-        , {
+        },
+         {
             id: 6,
+            title: "Das ist noch ein Test",
+            time: "13:00",
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
+            repeat: repeatEnum.WEEKLY_REPEAT,
+            isActive: false
+        },
+        {
+           id: 12,
+           title: "Das ist noch ein Test",
+           time: "13:00",
+           days: [{value:weekDayEnum.MONDAY,isSelected:true}],
+           repeat: repeatEnum.WEEKLY_REPEAT,
+           isActive: false
+       }
+       ,
+         {
+            id: 13,
+            title: "Das ist noch ein Test",
+            time: "13:00",
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
+            repeat: repeatEnum.WEEKLY_REPEAT,
+            isActive: false
+        }
+        ,
+         {
+            id: 14,
             title: "Das ist noch ein Test",
             time: "13:00",
             days: [{value:weekDayEnum.MONDAY,isSelected:true}],
