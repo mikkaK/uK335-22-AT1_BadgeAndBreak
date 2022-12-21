@@ -123,14 +123,14 @@ export default function Home({navigation}) {
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
                 <ScrollView style={styles.scrollView}>
-                        {reminders.map(reminders => (
+                        {reminders.map(reminder => (
                             <TouchableRipple
                                 onPress={() =>
-                                    navigation.navigate("Details",{reminders})}>
+                                    navigation.navigate("Details",{reminder,reminders})}>
                             <Card style={styles.card}>
                                 <Card.Content>
-                                    <Title>{reminders.id}</Title>
-                                    <Text>Zeit: {reminders.time}, {reminders.repeat}</Text>
+                                    <Title>{reminder.id}</Title>
+                                    <Text>Zeit: {reminder.time}, {reminder.repeat}</Text>
                                 </Card.Content>
                                 <SwitchButton/>
                             </Card>
