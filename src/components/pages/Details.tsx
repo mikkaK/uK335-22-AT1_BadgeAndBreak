@@ -9,6 +9,7 @@ import StorageService from "../../services/StorageService";
 import {WeekdayType} from "../../types/WeekDayType";
 import moment, {Moment} from "moment";
 import {useTranslation} from "react-i18next";
+import SnackbarContent from "../molecules/Snackbar";
 
 export default function Details({navigation, route}) {
     const theme = useTheme();
@@ -18,6 +19,7 @@ export default function Details({navigation, route}) {
     const [enteredTime, setEnteredTime] = useState<Moment>();
     const [selectedDays, setSelectedDays] = useState<WeekdayType[]>([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
+    const [snackbarMessage,setSnackbarMessage] = useState<string>("Error")
     const {t} = useTranslation()
     const [errorText, setErrorText] = useState<string>("An undefined error occurred")
     const [allReminders, setAllReminders] = useState<ReminderType[]>()
@@ -144,17 +146,10 @@ export default function Details({navigation, route}) {
                     </Button>
                 </View>
                 <View style={[styles.container, styles.snackbarContainer]}>
-                    <Snackbar
-                        visible={isSnackbarVisible}
-                        onDismiss={() => {
-                            setIsSnackbarVisible(false)
-                        }}
-                        style={{backgroundColor: theme.colors.error}}
-                    >
-                        <Text style={{color: theme.colors.onError}}>Error</Text>
-                    </Snackbar>
+                    <SnackbarContent message={snackbarMessage} visibility={isSnackbarVisible}
+                        setVisibility={
+                            setIsSnackbarVisible}/>
                 </View>
-
             </ImageBackground>
         </>);
 }

@@ -20,10 +20,6 @@ export default function (props:PropType) {
             value: Repeat.NEVER_REPEAT,
         },
         {
-            label: t("description.daily"),
-            value: Repeat.DAILY_REPEAT,
-        },
-        {
             label: t("description.weekly"),
             value: Repeat.WEEKLY_REPEAT,
         },

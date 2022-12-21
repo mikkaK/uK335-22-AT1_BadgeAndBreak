@@ -10,7 +10,7 @@ import {ReminderType} from "./src/types/models/Reminders.models";
 import {useTranslation} from "react-i18next";
 import "./src/config/i18n/config";
 import "intl";
-import {MMKVLoader, useMMKVStorage} from "react-native-mmkv-storage";
+import notifee, {EventType} from "@notifee/react-native";
 
 // on top of your index.android.js file
 const isAndroid = require('react-native').Platform.OS === 'android'; // this line is only needed if you don't use an .android.js file
