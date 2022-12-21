@@ -3,7 +3,7 @@ import {styles} from "../../styles/home.styles"
 import {View} from "react-native";
 
 
-export default function AddNewReminderFAB({navigation}) {
+export default function AddNewReminderFAB({navigation,reminders}) {
 
     return (
         <View style={styles.fabView}>
@@ -11,7 +11,7 @@ export default function AddNewReminderFAB({navigation}) {
                 icon="plus"
                 style={styles.fab}
                 onPress={() =>
-                navigation.navigate('Details')}
+                navigation.navigate('Details',{reminders})}
             />
         </View>
     )
