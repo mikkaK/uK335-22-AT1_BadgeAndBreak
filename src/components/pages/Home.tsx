@@ -139,7 +139,7 @@ export default function Home({navigation}) {
                 </ScrollView>
                 <StatusBar style="auto"/>
                 <View style={styles.FABContainer}>
-                <AddNewReminderFAB navigation={navigation}/>
+                <AddNewReminderFAB navigation={navigation} reminders={reminders}/>
                 </View>
             </ImageBackground>
         </View>
