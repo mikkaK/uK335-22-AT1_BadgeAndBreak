@@ -8,6 +8,10 @@ import {
 import Home from "./src/components/pages/Home";
 import Details from "./src/components/pages/Details";
 import {NativeRouter} from "react-router-native";
+import {useEffect} from "react";
+import StorageService from "./src/services/StorageService";
+import {ReminderType} from "./src/types/models/Reminders.models";
+
 // on top of your index.android.js file
 const isAndroid = require('react-native').Platform.OS === 'android'; // this line is only needed if you don't use an .android.js file
 
@@ -73,7 +77,15 @@ const theme = {
 
 const Stack = createStackNavigator<RootStackParamList>()
 
+
+
 export default function App() {
+  const allReminders:ReminderType[] = [{} as ReminderType]
+  const {storeData} = StorageService
+
+  useEffect(() => {
+    storeData("allReminders", allReminders.toString());
+  },[])
   return (
       <NativeRouter>
     <PaperProvider theme={theme}>
@@ -96,13 +108,4 @@ export default function App() {
 
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
