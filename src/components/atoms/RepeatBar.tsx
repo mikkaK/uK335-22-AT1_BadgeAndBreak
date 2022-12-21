@@ -5,12 +5,13 @@ import {useState} from "react";
 import Repeat from "../../config/Repeat";
 type PropType = {
     handleChange:( value:string ) => any;
+    selectedValue?:string;
 }
 export default function (props:PropType) {
-    const { handleChange } = props;
+    const { handleChange, selectedValue } = props;
     const theme = useTheme();
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
-    const [repeat, setRepeat] = useState<string>("never")
+    const [repeat, setRepeat] = useState<string>(selectedValue ? selectedValue : "never")
     const repeatOptions = [
         {
             label: "Never",

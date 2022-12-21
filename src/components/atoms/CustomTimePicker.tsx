@@ -1,9 +1,9 @@
 import {useCallback, useEffect, useState} from "react";
-import {View, StyleSheet} from "react-native";
-import {TextInput, useTheme, IconButton} from 'react-native-paper';
-import {TimePicker, TimePickerModal, en, de, nl, enGB, registerTranslation} from "react-native-paper-dates";
+import {StyleSheet, View} from "react-native";
+import {IconButton, useTheme} from 'react-native-paper';
+import {de, en, enGB, nl, registerTranslation, TimePickerModal} from "react-native-paper-dates";
 import "intl";
-import StorageService from "../../services/StorageService";
+import {Moment} from "moment";
 
 registerTranslation('en-GB', enGB);
 registerTranslation('de', de);
@@ -16,32 +16,46 @@ type PropType = {
         hours: number;
         minutes: number;
     }) => any;
+    selectedTime?: Moment
 }
 
 const styles = StyleSheet.create({
     timeKeyboardContainer: {
         flex: 2,
         justifyContent: "center",
-        //backgroundColor: "red"
     },
     timeClockIconContainer: {
         flex: 1,
         alignContent: "center",
         justifyContent: "center"
-        //backgroundColor : "blue"
     }
 })
 export default function CustomTimePicker(props: PropType) {
-    const {initialVisibility, handleConfirm} = props;
+    const {initialVisibility, handleConfirm, selectedTime} = props;
     const [modalIsVisible, setModalIsVisible] = useState(initialVisibility)
     const theme = useTheme();
     const currentTime = new Date();
-
-
+    const [selectedHour, setSelectedHour] = useState<number>()
+    const [selectedMinute, setSelectedMinute] = useState<number>()
 
     const handleDismiss = useCallback(() => {
         setModalIsVisible(false)
     }, [setModalIsVisible])
+
+    useEffect(() => {
+        if (selectedTime) {
+            console.log(selectedTime)
+            console.log(typeof selectedTime)
+
+            console.log("hours",selectedTime.hour())
+            setSelectedHour(selectedTime.hour())
+            setSelectedMinute(selectedTime.minute())
+        }
+    }, [selectedTime])
+
+    useEffect(() => {
+        console.log(selectedMinute)
+    }, [selectedMinute]);
 
 
     return (
@@ -60,8 +74,8 @@ export default function CustomTimePicker(props: PropType) {
                                          handleConfirm(hoursAndMinutes);
                                          setModalIsVisible(false);
                                      }}
-                                     hours={currentTime.getHours()}
-                                     minutes={currentTime.getMinutes()}
+                                     hours={selectedHour ? selectedHour : currentTime.getHours()}
+                                     minutes={selectedMinute ? selectedMinute : currentTime.getMinutes()}
                                      uppercase={true}
                                      animationType={"fade"}
                     />

@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import {KeyboardAvoidingView, StyleSheet, Text, View} from "react-native";
+import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import {Button, Snackbar, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
@@ -7,15 +7,17 @@ import RepeatBar from "../atoms/RepeatBar";
 import {ReminderType} from "../../types/models/Reminders.models";
 import StorageService from "../../services/StorageService";
 import {WeekdayType} from "../../types/WeekDayType";
+import moment, {Moment} from "moment";
+import {json} from "react-router-native";
 
 
-export default function Details() {
+export default function Details({navigation, route}) {
     const theme = useTheme();
-    const [enteredText, setEnteredText] = useState("");
-    const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(true)
-    const [selectedReminder, setSelectedReminder] = useState<ReminderType>()
+    const [enteredText, setEnteredText] = useState(route.params.reminder ? route.params.reminder.title : "");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
+    const [selectedReminder, setSelectedReminder] = useState<ReminderType>(route.params.reminder ? route.params.reminder : {} as ReminderType)
     const {storeData, getData} = StorageService
-    const [enteredTime, setEnteredTime] = useState<string>();
+    const [enteredTime, setEnteredTime] = useState<Moment>();
     const [selectedDays, setSelectedDays] = useState<WeekdayType[]>([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
     const [errorText, setErrorText] = useState<string>("An undefined error occurred")
@@ -50,24 +52,11 @@ export default function Details() {
 
 
     useEffect(() => {
-        getData("selectedReminder").then((value) => {
-            if (value === undefined || value === null) {
-                setSelectedReminder({
-                        days: [],
-                        id: 0,
-                        isActive: true,
-                        repeat: undefined,
-                        time: "",
-                        title: ""
-                    }
-                )
-            }
-            //todo set fields to previous values when in "edit mode"
-            setSelectedReminder(JSON.parse(value))
-        getData("allReminders").then((value) => {
-            setAllReminders(JSON.parse(value))
-        })
-        })
+        if (route.params.reminder) {
+            setSelectedReminder(route.params.reminder)
+        }
+        setAllReminders(route.params.reminders)
+
     }, [])
 
     const handleSave = () => {
@@ -81,24 +70,24 @@ export default function Details() {
                 time: enteredTime,
                 title: enteredText
             }
-            console.log(tempReminder);
-
-            console.log(allReminders);
-            allReminders.push(tempReminder);
-            //todo push to correct storage (get correct storage in first term)
-            storeData("allReminders", allReminders.toString()).then(() => {
-                console.log("successfully pushed to reminders")
-            })
+            setAllReminders([...allReminders, tempReminder]);
+            storeData("allReminders", JSON.stringify(allReminders)).then(() => {
+                navigation.navigate("Home")
+            });
         } else {
             setErrorText("Please fill out every field")
             setIsSnackbarVisible(true)
         }
     }
+    useEffect(() => {
+        console.log(allReminders);
+    },[allReminders])
 
     const handleTimeConfirm = useCallback(({hours, minutes}) => {
-        let hourString = hours.toString();
-        let minuteString = minutes.toString();
-        setEnteredTime(hourString + ":" + minuteString);
+        const time = moment();
+        time.hours(hours)
+        time.minutes(minutes)
+        setEnteredTime(time);
     }, [enteredTime])//maybe remove input
 
     const handleWeekdayPress = useCallback((item: WeekdayType) => {
@@ -121,45 +110,47 @@ export default function Details() {
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
 
-            <View style={styles.container}>
-                <TextInput
-                    label={"message"}
-                    placeholder={"messageToShow"}
-                    onChangeText={text => setEnteredText(text)}
-                    mode={'flat'}
-                    theme={theme}
-                    style={{height: "100%"}}
-                />
-            </View>
-            <View style={[styles.container, styles.clockContainer]}>
-                <CustomTimePicker initialVisibility={false}
-                                  handleConfirm={handleTimeConfirm}
-                />
-            </View>
-            <View style={styles.container}>
-                <WeekdayBar handleStateChange={handleWeekdayPress}/>
-            </View>
-            <View style={styles.container}>
-                <RepeatBar handleChange={handleRepeatChange}/>
-            </View>
-            <View style={[styles.container, styles.saveContainer]}>
-                <Button mode={"contained"} style={styles.saveButton} onPress={() => {
-                    handleSave();
-                }}>
-                    <Text style={{width: "90%"}}>Save</Text>
-                </Button>
-            </View>
-            <View style={[styles.container, styles.snackbarContainer]}>
-                <Snackbar
-                    visible={isSnackbarVisible}
-                    onDismiss={() => {
-                        setIsSnackbarVisible(false)
-                    }}
-                    style={{backgroundColor: theme.colors.error}}
-                >
-                    <Text style={{color: theme.colors.onError}}>{errorText}</Text>
-                </Snackbar>
-            </View>
+                <View style={styles.container}>
+                    <TextInput
+                        label={"message"}
+                        onChangeText={text => setEnteredText(text)}
+                        mode={'flat'}
+                        theme={theme}
+                        style={{height: "100%"}}
+
+                        defaultValue={enteredText}
+                    />
+                </View>
+                <View style={[styles.container, styles.clockContainer]}>
+                    <CustomTimePicker initialVisibility={false}
+                                      handleConfirm={handleTimeConfirm}
+                                      selectedTime={selectedReminder.time}
+                    />
+                </View>
+                <View style={styles.container}>
+                    <WeekdayBar handleStateChange={handleWeekdayPress} selectedValues={selectedReminder.days}/>
+                </View>
+                <View style={styles.container}>
+                    <RepeatBar handleChange={handleRepeatChange} selectedValue={selectedReminder.repeat}/>
+                </View>
+                <View style={[styles.container, styles.saveContainer]}>
+                    <Button mode={"contained"} style={styles.saveButton} onPress={() => {
+                        handleSave();
+                    }}>
+                        <Text style={{width: "90%"}}>Save</Text>
+                    </Button>
+                </View>
+                <View style={[styles.container, styles.snackbarContainer]}>
+                    <Snackbar
+                        visible={isSnackbarVisible}
+                        onDismiss={() => {
+                            setIsSnackbarVisible(false)
+                        }}
+                        style={{backgroundColor: theme.colors.error}}
+                    >
+                        <Text style={{color: theme.colors.onError}}>{errorText}</Text>
+                    </Snackbar>
+                </View>
             </ImageBackground>
         </>);
 }

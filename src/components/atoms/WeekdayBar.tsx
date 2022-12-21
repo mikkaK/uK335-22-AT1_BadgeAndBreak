@@ -1,7 +1,7 @@
 import {StyleSheet, View} from "react-native";
 import {Avatar, TouchableRipple, useTheme} from "react-native-paper";
 import WeekDays from "../../config/WeekDays";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {WeekdayType} from "../../types/WeekDayType";
 
 type PropType = {
@@ -9,11 +9,13 @@ type PropType = {
         isSelected: boolean,
         value: string
     }) => any;
+
+    selectedValues?: WeekdayType[];
 }
 
 export default function (props:PropType) {
     const theme = useTheme();
-    const {handleStateChange} = props;
+    const {handleStateChange, selectedValues} = props;
     const [weekdays, setWeekdays] = useState<WeekdayType[]>([
         {
             isSelected: false,
@@ -44,6 +46,20 @@ export default function (props:PropType) {
             value: WeekDays.SUNDAY
         }
     ])
+
+    useEffect(() => {
+        let weekdaysCopy = [...weekdays];
+        if (selectedValues){
+            for (const weekDay of weekdaysCopy) {
+                for (const selectedValue of selectedValues) {
+                    if (selectedValue.value === weekDay.value){
+                        let index = weekdaysCopy.findIndex(item => item.value === selectedValue.value);
+                        weekdaysCopy[index].isSelected = true;
+                    }
+                }
+            }
+        }
+    },[selectedValues])
     const styles = StyleSheet.create({
         container: {
             flexDirection: "row",
