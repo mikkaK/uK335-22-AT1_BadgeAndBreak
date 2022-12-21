@@ -17,7 +17,8 @@ export default function Details({navigation, route}) {
     const [enteredText, setEnteredText] = useState(route.params.reminder ? route.params.reminder.title : "");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
     const [selectedReminder, setSelectedReminder] = useState<ReminderType>(route.params.reminder ? route.params.reminder : {} as ReminderType)
-    const {storeData, getData} = StorageService
+    //const {storeData, getData} = StorageService
+    const {setValue, getValue } = StorageService
     const [enteredTime, setEnteredTime] = useState<Moment>();
     const [selectedDays, setSelectedDays] = useState<WeekdayType[]>([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
@@ -73,9 +74,10 @@ export default function Details({navigation, route}) {
                 title: enteredText
             }
             setAllReminders([...allReminders, tempReminder]);
-            storeData("allReminders", JSON.stringify(allReminders)).then(() => {
+            setValue("allReminders", JSON.stringify(allReminders));
+            /*storeData("allReminders", JSON.stringify(allReminders)).then(() => {
                 navigation.navigate("Home")
-            });
+            });*/
         } else {
             setErrorText("Please fill out every field")
             setIsSnackbarVisible(true)

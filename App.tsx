@@ -1,4 +1,3 @@
-
 import {createStackNavigator} from "@react-navigation/stack";
 import {NavigationContainer} from "@react-navigation/native";
 import {MD3LightTheme as DefaultTheme, Provider as PaperProvider,} from "react-native-paper";
@@ -11,6 +10,7 @@ import {ReminderType} from "./src/types/models/Reminders.models";
 import {useTranslation} from "react-i18next";
 import "./src/config/i18n/config";
 import "intl";
+import {MMKVLoader, useMMKVStorage} from "react-native-mmkv-storage";
 
 // on top of your index.android.js file
 const isAndroid = require('react-native').Platform.OS === 'android'; // this line is only needed if you don't use an .android.js file
@@ -75,14 +75,13 @@ const theme = {
 }
 
 const Stack = createStackNavigator<RootStackParamList>()
-
 export default function App() {
     const allReminders: ReminderType[] = []
-    const {storeData} = StorageService
-  const {t} = useTranslation();
+    const {setValue} = StorageService
+    const {t} = useTranslation();
 
     useEffect(() => {
-        storeData("allReminders", JSON.stringify(allReminders));
+        setValue("allReminders", JSON.stringify(allReminders));
     }, [])
 
     const globalScreenOptions = {

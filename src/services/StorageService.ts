@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {create, MMKVLoader} from "react-native-mmkv-storage";
 
-const storeData = async (key: string, value: string) => {
+/*const storeData = async (key: string, value: string) => {
     try {
         await AsyncStorage.setItem(key, value);
     }catch(e){
@@ -17,11 +18,26 @@ const getData = async (key: string) => {
     }catch(e) {
         console.log("erererririri")
     }
-};
+};*/
 
-const StorageService = {
+const storage = new MMKVLoader().initialize();
+const useStorage = create(storage)
+
+const setValue  = async (key:string, value:string) => {
+    await storage.setStringAsync(key, value);
+}
+const getValue = async (key:string):Promise<string> => {
+    let string = await storage.getStringAsync("string");
+    return string;
+}
+
+/*const StorageService = {
     storeData,
     getData,
-};
+};*/
 
+const StorageService = {
+    setValue,
+    getValue
+}
 export default StorageService;
