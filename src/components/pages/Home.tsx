@@ -20,14 +20,14 @@ export default function Home({navigation}) {
             id: 1,
             title: "Das ist ein Test",
             time: "12:00",
-            days: [weekDayEnum.MONDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.DAILY_REPEAT,
-            isActive: true
+            isActive: true,
         }, {
             id: 2,
             title: "Das ist noch ein Test",
             time: "13:00",
-            days: [weekDayEnum.TUESDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: false
         },
@@ -35,14 +35,14 @@ export default function Home({navigation}) {
             id: 3,
             title: "Das ist ein Test",
             time: "12:00",
-            days: [weekDayEnum.MONDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.DAILY_REPEAT,
             isActive: true
         }, {
             id: 4,
             title: "Das ist noch ein Test",
             time: "13:00",
-            days: [weekDayEnum.TUESDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: false
         },
@@ -50,14 +50,14 @@ export default function Home({navigation}) {
             id: 5,
             title: "Das ist ein Test",
             time: "12:00",
-            days: [weekDayEnum.MONDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.DAILY_REPEAT,
             isActive: true
         }, {
             id: 6,
             title: "Das ist noch ein Test",
             time: "13:00",
-            days: [weekDayEnum.TUESDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: false
         },
@@ -65,14 +65,14 @@ export default function Home({navigation}) {
             id: 7,
             title: "Das ist ein Test",
             time: "12:00",
-            days: [weekDayEnum.MONDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.DAILY_REPEAT,
             isActive: true
         }, {
             id: 8,
             title: "Das ist noch ein Test",
             time: "13:00",
-            days: [weekDayEnum.TUESDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: false
         }
@@ -80,7 +80,7 @@ export default function Home({navigation}) {
             id: 6,
             title: "Das ist noch ein Test",
             time: "13:00",
-            days: [weekDayEnum.TUESDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: false
         },
@@ -88,14 +88,14 @@ export default function Home({navigation}) {
             id: 7,
             title: "Das ist ein Test",
             time: "12:00",
-            days: [weekDayEnum.MONDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.DAILY_REPEAT,
             isActive: true
         }, {
             id: 8,
             title: "Das ist noch ein Test",
             time: "13:00",
-            days: [weekDayEnum.TUESDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: false
         }
@@ -103,7 +103,7 @@ export default function Home({navigation}) {
             id: 6,
             title: "Das ist noch ein Test",
             time: "13:00",
-            days: [weekDayEnum.TUESDAY],
+            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
             repeat: repeatEnum.WEEKLY_REPEAT,
             isActive: false
         }
@@ -123,14 +123,14 @@ export default function Home({navigation}) {
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
                 <ScrollView style={styles.scrollView}>
-                        {reminders.map(reminders => (
+                        {reminders.map(reminder => (
                             <TouchableRipple
                                 onPress={() =>
-                                    navigation.navigate("Details",{reminders})}>
+                                    navigation.navigate("Details",{reminder,reminders})}>
                             <Card style={styles.card}>
                                 <Card.Content>
-                                    <Title>{reminders.id}</Title>
-                                    <Text>Zeit: {reminders.time}, {reminders.repeat}</Text>
+                                    <Title>{reminder.id}</Title>
+                                    <Text>Zeit: {reminder.time}, {reminder.repeat}</Text>
                                 </Card.Content>
                                 <SwitchButton/>
                             </Card>
