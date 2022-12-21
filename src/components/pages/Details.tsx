@@ -8,23 +8,20 @@ import {ReminderType} from "../../types/models/Reminders.models";
 import StorageService from "../../services/StorageService";
 import {WeekdayType} from "../../types/WeekDayType";
 import moment, {Moment} from "moment";
-import {json} from "react-router-native";
 import {useTranslation} from "react-i18next";
-
 
 export default function Details({navigation, route}) {
     const theme = useTheme();
     const [enteredText, setEnteredText] = useState(route.params.reminder ? route.params.reminder.title : "");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
     const [selectedReminder, setSelectedReminder] = useState<ReminderType>(route.params.reminder ? route.params.reminder : {} as ReminderType)
-    //const {storeData, getData} = StorageService
-    const {setValue, getValue } = StorageService
     const [enteredTime, setEnteredTime] = useState<Moment>();
     const [selectedDays, setSelectedDays] = useState<WeekdayType[]>([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
     const {t} = useTranslation()
     const [errorText, setErrorText] = useState<string>("An undefined error occurred")
     const [allReminders, setAllReminders] = useState<ReminderType[]>()
+    const {storeData, getData} = StorageService;
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -63,21 +60,22 @@ export default function Details({navigation, route}) {
     }, [])
 
     const handleSave = () => {
+        const sortedReminders = [...allReminders].sort((r1, r2) => (r1.id < r2.id) ? 1 : (r1.id > r2.id) ? -1 : 0)
+        console.log("sorted reminders", sortedReminders)
+        let idOfLastIndex = sortedReminders[0].id
+        console.log("highest id", idOfLastIndex)
         if (selectedDays.length && enteredText && enteredTime) {
             setIsSnackbarVisible(false)
             const tempReminder: ReminderType = {
                 days: selectedDays,
                 repeat: selectedRepeat,
                 isActive: true,
-                id: 1,
+                id: ++idOfLastIndex,
                 time: enteredTime,
                 title: enteredText
             }
-            setAllReminders([...allReminders, tempReminder]);
-            setValue("allReminders", JSON.stringify(allReminders));
-            /*storeData("allReminders", JSON.stringify(allReminders)).then(() => {
-                navigation.navigate("Home")
-            });*/
+            storeData("allReminders", JSON.stringify([...allReminders, tempReminder])).then(() =>  navigation.navigate("Home"));
+
         } else {
             setErrorText("Please fill out every field")
             setIsSnackbarVisible(true)
@@ -85,7 +83,7 @@ export default function Details({navigation, route}) {
     }
     useEffect(() => {
         console.log(allReminders);
-    },[allReminders])
+    }, [allReminders])
 
     const handleTimeConfirm = useCallback(({hours, minutes}) => {
         const time = moment();
@@ -113,52 +111,14 @@ export default function Details({navigation, route}) {
         <>
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
-
-            <View style={styles.container}>
-                <TextInput
-                    label={t("description.label")}
-                    placeholder={t("description.placeholderTextFiled")}
-                    onChangeText={text => setEnteredText(text)}
-                    mode={'flat'}
-                    theme={theme}
-                    style={{height: "100%"}}
-                />
-            </View>
-            <View style={[styles.container, styles.clockContainer]}>
-                <CustomTimePicker initialVisibility={false}
-                                  handleConfirm={handleTimeConfirm}
-                />
-            </View>
-            <View style={styles.container}>
-                <WeekdayBar handleStateChange={handleWeekdayPress}/>
-            </View>
-            <View style={styles.container}>
-                <RepeatBar handleChange={handleRepeatChange}/>
-            </View>
-            <View style={[styles.container, styles.saveContainer]}>
-                <Button mode={"contained"} style={styles.saveButton} onPress={handleSave}>
-                    <Text style={{width: "90%"}}>{t("description.save")}</Text>
-                </Button>
-            </View>
-            <View style={[styles.container, styles.snackbarContainer]}>
-                <Snackbar
-                    visible={isSnackbarVisible}
-                    onDismiss={() => {
-                        setIsSnackbarVisible(false)
-                    }}
-                    style={{backgroundColor: theme.colors.error}}
-                >
-                    <Text style={{color: theme.colors.onError}}>Error</Text>
-                </Snackbar>
-            </View>
                 <View style={styles.container}>
                     <TextInput
-                        label={"message"}
+                        label={t("description.label")}
+                        placeholder={t("description.placeholderTextFiled")}
                         onChangeText={text => setEnteredText(text)}
                         mode={'flat'}
                         theme={theme}
                         style={{height: "100%"}}
-
                         defaultValue={enteredText}
                     />
                 </View>
@@ -169,16 +129,18 @@ export default function Details({navigation, route}) {
                     />
                 </View>
                 <View style={styles.container}>
-                    <WeekdayBar handleStateChange={handleWeekdayPress} selectedValues={selectedReminder.days}/>
+                    <WeekdayBar handleStateChange={handleWeekdayPress}
+                                selectedValues={selectedReminder.days}/>
                 </View>
                 <View style={styles.container}>
-                    <RepeatBar handleChange={handleRepeatChange} selectedValue={selectedReminder.repeat}/>
+                    <RepeatBar handleChange={handleRepeatChange}
+                               selectedValue={selectedReminder.repeat}/>
                 </View>
                 <View style={[styles.container, styles.saveContainer]}>
                     <Button mode={"contained"} style={styles.saveButton} onPress={() => {
-                        handleSave();
+                        handleSave()
                     }}>
-                        <Text style={{width: "90%"}}>Save</Text>
+                        <Text style={{width: "90%"}}>{t("description.save")}</Text>
                     </Button>
                 </View>
                 <View style={[styles.container, styles.snackbarContainer]}>
@@ -189,9 +151,10 @@ export default function Details({navigation, route}) {
                         }}
                         style={{backgroundColor: theme.colors.error}}
                     >
-                        <Text style={{color: theme.colors.onError}}>{errorText}</Text>
+                        <Text style={{color: theme.colors.onError}}>Error</Text>
                     </Snackbar>
                 </View>
+
             </ImageBackground>
         </>);
 }

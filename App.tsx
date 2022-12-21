@@ -77,11 +77,9 @@ const theme = {
 const Stack = createStackNavigator<RootStackParamList>()
 export default function App() {
     const allReminders: ReminderType[] = []
-    const {setValue} = StorageService
     const {t} = useTranslation();
 
     useEffect(() => {
-        setValue("allReminders", JSON.stringify(allReminders));
     }, [])
 
     const globalScreenOptions = {

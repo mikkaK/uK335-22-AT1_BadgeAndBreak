@@ -10,13 +10,11 @@ import StorageService from "../../services/StorageService";
 import SwitchButton from "../atoms/toggleSwitch";
 import moment, {Moment} from "moment";
 import {useIsFocused} from "@react-navigation/native";
-import {create, MMKVLoader} from "react-native-mmkv-storage";
 
 
 export default function Home({navigation}) {
     const {t} = useTranslation()
-   // const {storeData, getData} = StorageService;
-    const { getValue, setValue } = StorageService
+    const {storeData, getData } = StorageService;
     const testMoment: Moment = moment("12:15", "hh:mm")
 
     const [reminders, setRemiders] = useState<ReminderType[]>(/*[
@@ -115,16 +113,18 @@ export default function Home({navigation}) {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        /*getData("allReminders").then(value => {
-            console.info(value)
-            setRemiders(JSON.parse(value));
-        })*/
-        getValue("allReminders").then(value => {
+        getData("allReminders").then(value => {
             setRemiders(JSON.parse(value))
         })
         console.log("reminders on homepage", reminders)
     }, [isFocused])
 
+    useEffect(() => {
+        if (reminders[0]) {
+            console.log(reminders[0].time)
+            console.log("type of time: ", typeof reminders[0].time)
+        }
+    },[reminders])
     return (
 
         <View style={styles.container}>
@@ -138,7 +138,7 @@ export default function Home({navigation}) {
                             <Card style={styles.card}>
                                 <Card.Content>
                                     <Title>{reminder.id}</Title>
-                                    <Text>{t("description.time")}, {reminder.time.toString()}, {t("description." + reminder.repeat)}</Text>
+                                    <Text>{t("description.time")} {moment(reminder.time).format("HH:mm")}, {t("description." + reminder.repeat)}</Text>
                                 </Card.Content>
                                 <SwitchButton/>
                             </Card>
