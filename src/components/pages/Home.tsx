@@ -18,105 +18,13 @@ export default function Home({navigation}) {
     const theme = useTheme();
     const {storeData, getData } = StorageService;
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
-    const testMoment: Moment = moment("12:15", "hh:mm")
+    const [reminders, setRemiders] = useState<ReminderType[]>([])
 
-    const [reminders, setRemiders] = useState<ReminderType[]>(/*[
-        {
-            id: 1,
-            title: "Das ist ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: true,
-        }, {
-            id: 2,
-            title: "Das ist noch ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: false
-        },
-        {
-            id: 3,
-            title: "Das ist ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: true
-        }, {
-            id: 4,
-            title: "Das ist noch ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: false
-        },
-        {
-            id: 5,
-            title: "Das ist ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: true
-        }, {
-            id: 6,
-            title: "Das ist noch ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: false
-        },
-        {
-            id: 7,
-            title: "Das ist ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: true
-        }, {
-            id: 82,
-            title: "Das ist noch ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: false
-        }
-        , {
-            id: 6,
-            title: "Das ist noch ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: false
-        },
-        {
-            id: 7,
-            title: "Das ist ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: true
-        }, {
-            id: 81,
-            title: "Das ist noch ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: false
-        }
-        , {
-            id: 6,
-            title: "Das ist noch ein Test",
-            time: testMoment,
-            days: [{value:weekDayEnum.MONDAY,isSelected:true}],
-            repeat: repeatEnum.WEEKLY_REPEAT,
-            isActive: false
-        }
-    ])
     function deleteReminder(reminder: ReminderType) {
         setRemiders(reminders.filter((reminderToDelete)=> reminderToDelete.id !== reminder.id))
+        storeData("allReminders", JSON.stringify(reminder));
     }
-    ]*/[])
+
     const isFocused = useIsFocused();
 
     useEffect(() => {
@@ -125,19 +33,14 @@ export default function Home({navigation}) {
         })
         console.log("reminders on homepage", reminders)
     }, [isFocused])
-
-    useEffect(() => {
-        if (reminders[0]) {
-            console.log(reminders[0].time)
-            console.log("type of time: ", typeof reminders[0].time)
-        }
-    },[reminders])
     return (
 
         <View style={styles.container}>
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
                 <ScrollView style={styles.scrollView}>
+                    {reminders.length < 1 ?
+                        <>
                         {reminders.map(reminder => (
                             <TouchableRipple
                                 onPress={() =>
@@ -154,6 +57,11 @@ export default function Home({navigation}) {
 
                             </TouchableRipple>
                         ))}
+                        </>
+                        :
+                        <>
+                        </>
+                    }
                 </ScrollView>
                 <StatusBar style="auto"/>
                 <View style={styles.FABContainer}>

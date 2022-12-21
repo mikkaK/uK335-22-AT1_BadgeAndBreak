@@ -62,10 +62,12 @@ export default function Details({navigation, route}) {
     }, [])
 
     const handleSave = () => {
-        const sortedReminders = [...allReminders].sort((r1, r2) => (r1.id < r2.id) ? 1 : (r1.id > r2.id) ? -1 : 0)
-        console.log("sorted reminders", sortedReminders)
-        let idOfLastIndex = sortedReminders[0].id
-        console.log("highest id", idOfLastIndex)
+        let idOfLastIndex = 0;
+        if (allReminders.length !== 0) {
+            const sortedReminders = [...allReminders].sort((r1, r2) => (r1.id < r2.id) ? 1 : (r1.id > r2.id) ? -1 : 0)
+            idOfLastIndex = sortedReminders[0].id
+        }
+        //todo fix spread operator error
         if (selectedDays.length && enteredText && enteredTime) {
             setIsSnackbarVisible(false)
             const tempReminder: ReminderType = {
@@ -76,16 +78,18 @@ export default function Details({navigation, route}) {
                 time: enteredTime,
                 title: enteredText
             }
-            storeData("allReminders", JSON.stringify([...allReminders, tempReminder])).then(() =>  navigation.navigate("Home"));
+            if (allReminders.length !== 0) {
+                storeData("allReminders", JSON.stringify(tempReminder)).then(() => navigation.navigate("Home"));
+
+            }else{
+                storeData("allReminders", JSON.stringify([...allReminders, tempReminder])).then(() => navigation.navigate("Home"));
+            }
 
         } else {
             setErrorText("Please fill out every field")
             setIsSnackbarVisible(true)
         }
     }
-    useEffect(() => {
-        console.log(allReminders);
-    }, [allReminders])
 
     const handleTimeConfirm = useCallback(({hours, minutes}) => {
         const time = moment();
