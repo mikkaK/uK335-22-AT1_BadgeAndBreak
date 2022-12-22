@@ -21,8 +21,11 @@ type PropType = {
 }
 /**
  *
- * @param props
+ * @param props (initialVisibility: sets the initial visibility of the modal,
+ *               handleConfirm: callBack function for passing the selected values to the Detailspage,
+ *               selectedTime: optional attribute for passing a preselected value to the component)
  * @constructor
+ * This component is used in the detail page to pick the desired trigger time of a reminder
  */
 
 export default function CustomTimePicker(props: PropType) {

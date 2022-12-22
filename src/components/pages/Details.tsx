@@ -15,6 +15,13 @@ type PropType = {
     navigation,
     route,
 }
+
+/**
+ *
+ * @param props (navigation: react-native-router variable used for navigation,
+ *               route: is used to extract params from navigate function on previous page)
+ * @constructor
+ */
 export default function Details(props: PropType) {
     const {navigation, route} = props
     const {reminder, reminders} = route.params;

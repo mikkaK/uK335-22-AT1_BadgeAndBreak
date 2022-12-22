@@ -1,3 +1,6 @@
+/**
+ * this enum is used to get unified weekdays
+ */
 enum weekDayEnum {
     MONDAY = "MO",
     TUESDAY = "TU",

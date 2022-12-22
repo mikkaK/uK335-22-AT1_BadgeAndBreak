@@ -12,8 +12,8 @@ import moment from "moment";
 import SnackbarContent from "../molecules/Snackbar";
 
 /**
- * @param navigation
- * @param route
+ * @param navigation (navigation: react-native-router variable used for navigation)
+ * @param route (is used to extract params from navigate function on previous page)
  * @constructor
  */
 export default function Home({navigation, route}) {
