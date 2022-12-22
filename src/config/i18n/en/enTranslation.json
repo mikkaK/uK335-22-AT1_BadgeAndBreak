@@ -22,8 +22,7 @@
       "SU": "SU",
       "reminderCreated": "Reminder was created",
       "deleteMessage": "The reminder got deleted",
-      "errorMessageFillAllFields": "All fields need a value!",
-      "errorMessageInvalidTime": "Please enter a valid time"
+      "errorMessageFillAllFields": "Please fill out every field",
     }
   }
 }

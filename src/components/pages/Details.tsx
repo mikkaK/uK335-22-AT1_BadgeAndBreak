@@ -1,11 +1,10 @@
 import {useCallback, useEffect, useState} from "react";
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
-import {Button, Snackbar, TextInput, useTheme} from 'react-native-paper';
+import {Button, MD3Colors, Snackbar, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
 import RepeatBar from "../atoms/RepeatBar";
 import {ReminderType} from "../../types/models/Reminders.models";
-import StorageService from "../../services/StorageService";
 import {WeekdayType} from "../../types/WeekDayType";
 import moment, {Moment} from "moment";
 import {useTranslation} from "react-i18next";
@@ -28,7 +27,9 @@ export default function Details(props:PropType) {
     const [selectedRepeat, setSelectedRepeat] = useState<string>(reminder ? reminder.repeat : "never")
     const [snackbarMessage, setSnackbarMessage] = useState<string>("Error")
     const [reminderExists, setReminderExists] = useState<boolean>(false)
+    const [snackbarColor,setSnackbarColor] = useState<String>();
     const {t} = useTranslation()
+    const errorMessageFields = t("description.errorMessageFillAllFields")
     const bgStyles = StyleSheet.create({
         background:{
             backgroundColor: theme.colors.primary
@@ -50,7 +51,6 @@ export default function Details(props:PropType) {
 
     const handleSave = () => {
         if (selectedDays.length && enteredText && enteredTime) {
-            setIsSnackbarVisible(false)
             const tempReminder: ReminderType = {
                 days: selectedDays,
                 repeat: selectedRepeat,
@@ -65,7 +65,8 @@ export default function Details(props:PropType) {
                 merge: true
             })
         } else {
-            setSnackbarMessage("Please fill out every field")
+            setSnackbarColor("error")
+            setSnackbarMessage(errorMessageFields)
             setIsSnackbarVisible(true)
         }
     }
@@ -132,7 +133,7 @@ export default function Details(props:PropType) {
                 <View style={[styles.container, styles.snackbarContainer]}>
                     <SnackbarContent message={snackbarMessage} visibility={isSnackbarVisible}
                                      setVisibility={
-                                         setIsSnackbarVisible}/>
+                                         setIsSnackbarVisible} color={snackbarColor}/>
                 </View>
             </ImageBackground>
         </>);
