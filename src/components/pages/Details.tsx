@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
-import {Button, TextInput, useTheme} from 'react-native-paper';
+import {Button, Snackbar, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
 import RepeatBar from "../atoms/RepeatBar";
@@ -10,6 +10,7 @@ import {WeekdayType} from "../../types/WeekDayType";
 import moment, {Moment} from "moment";
 import {useTranslation} from "react-i18next";
 import SnackbarContent from "../molecules/Snackbar";
+import {styles} from '../../styles/detail.styles';
 type PropType = {
     navigation,
     route,
@@ -17,6 +18,7 @@ type PropType = {
 export default function Details(props:PropType) {
     const {navigation, route} = props
     const {reminder, reminders} = route.params;
+
     const theme = useTheme();
     const [enteredText, setEnteredText] = useState(reminder ? reminder.title : "");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
@@ -26,35 +28,11 @@ export default function Details(props:PropType) {
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
     const [snackbarMessage, setSnackbarMessage] = useState<string>("Error")
     const {t} = useTranslation()
-    const [errorText, setErrorText] = useState<string>("An undefined error occurred")
-    const [allReminders, setAllReminders] = useState<ReminderType[]>([])
-    const {storeData, getData} = StorageService;
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: theme.colors.primary,
-            marginBottom: "5%",
-            marginRight: "5%",
-            marginLeft: "5%",
-        },
-        clockContainer: {
-            flex: 3,
-            justifyContent: "center",
-            alignItems: "center"
-        },
-        snackbarContainer: {
-            flex: 1.5,
-            backgroundColor: "transparent"
-        },
-        saveContainer: {
-            backgroundColor: "transparent",
-            justifyContent: "center",
-            alignItems: "center",
-        },
-        saveButton: {
-            minWidth: "50%"
-        },
-        snackbar: {}
+    const bgStyles = StyleSheet.create({
+        background:{
+            backgroundColor: theme.colors.primary
+        }
+
     })
 
 

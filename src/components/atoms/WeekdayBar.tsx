@@ -4,6 +4,7 @@ import WeekDays from "../../config/WeekDays";
 import {useEffect, useState} from "react";
 import {WeekdayType} from "../../types/WeekDayType";
 import {useTranslation} from "react-i18next";
+import {styles} from "../../styles/weekdayBar.styles"
 
 type PropType = {
     handleStateChange: (stateAndValue : {
@@ -13,11 +14,16 @@ type PropType = {
 
     selectedValues?: WeekdayType[];
 }
-
+/**
+ *
+ * @param props
+ */
 export default function (props:PropType) {
     const theme = useTheme();
     const {handleStateChange, selectedValues} = props;
+
     const {t} = useTranslation()
+    const theme = useTheme();
     const [weekdays, setWeekdays] = useState<WeekdayType[]>([
         {
             isSelected: false,
@@ -49,48 +55,10 @@ export default function (props:PropType) {
         }
     ])
 
-    useEffect(() => {
-        let weekdaysCopy = [...weekdays];
-        if (selectedValues){
-            for (const weekDay of weekdaysCopy) {
-                for (const selectedValue of selectedValues) {
-                    if (selectedValue.value === weekDay.value){
-                        let index = weekdaysCopy.findIndex(item => item.value === selectedValue.value);
-                        weekdaysCopy[index].isSelected = true;
-                    }
-                }
-            }
-        }
-    },[selectedValues])
-    const styles = StyleSheet.create({
-        container: {
-            flexDirection: "row",
-            height: "100%",
-            alignItems: "center",
-            justifyContent: "center"
-        },
-        item: {
-            flex: 1,
-            marginLeft: "1.5%",
-            shadowOpacity: 1,
-            shadowRadius: 2,
-            shadowColor: "#000000",
-            shadowOffset: {width: 1, height: 0.5},
-
-        },
-        button: {
-            backgroundColor: theme.colors.primaryContainer,
-
-        },
-        buttonSelected: {
-            backgroundColor: theme.colors.secondary,
-            borderColor: "#000000",
-            border: "solid",
-            borderRadius: 50,
-            borderWidth: 1
-        }
-    })
-
+    /**
+     *
+     * @param item
+     */
     const handlePress =(item:WeekdayType) => {
         const { value } = item;
         let weekdaysCopy = [...weekdays]
@@ -112,7 +80,7 @@ export default function (props:PropType) {
                         <TouchableRipple onPress={() => handlePress(item)}>
                         <Avatar.Text size={40}
                                      label={item.value}
-                                     style={item.isSelected ? styles.buttonSelected : styles.button}
+                                     style={item.isSelected ? {...styles.buttonSelected, backgroundColor: theme.colors.secondary} : {backgroundColor: theme.colors.primaryContainer}}
                                      labelStyle={{fontWeight: "bold", fontSize: 17}}
                         />
                         </TouchableRipple>

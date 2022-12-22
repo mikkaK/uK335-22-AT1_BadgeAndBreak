@@ -15,5 +15,3 @@ i18n
         supportedLngs: ["de", "en"],
         resources,
     })
-
-export default i18n;

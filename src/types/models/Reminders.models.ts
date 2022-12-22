@@ -1,5 +1,3 @@
-import repeatEnum from "../../config/Repeat"
-import weekDayEnum from "../../config/WeekDays"
 import {WeekdayType} from "../WeekDayType";
 import {Moment} from "moment";
 

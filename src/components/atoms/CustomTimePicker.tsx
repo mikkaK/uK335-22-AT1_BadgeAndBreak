@@ -4,12 +4,12 @@ import {IconButton, useTheme} from 'react-native-paper';
 import {de, en, enGB, nl, registerTranslation, TimePickerModal} from "react-native-paper-dates";
 import "intl";
 import moment, {Moment} from "moment";
-import {useTranslation} from "react-i18next";
 
-registerTranslation('en-GB', enGB);
+import {useTranslation} from "react-i18next";
+import {styles} from "../../styles/timePicker.styles"
+
 registerTranslation('de', de);
 registerTranslation('en', en);
-registerTranslation('nl', nl);
 
 type PropType = {
     initialVisibility: boolean;
@@ -19,18 +19,12 @@ type PropType = {
     }) => any;
     selectedTime?: Moment
 }
+/**
+ *
+ * @param props
+ * @constructor
+ */
 
-const styles = StyleSheet.create({
-    timeKeyboardContainer: {
-        flex: 2,
-        justifyContent: "center",
-    },
-    timeClockIconContainer: {
-        flex: 1,
-        alignContent: "center",
-        justifyContent: "center"
-    }
-})
 export default function CustomTimePicker(props: PropType) {
     const {initialVisibility, handleConfirm, selectedTime} = props;
     const [modalIsVisible, setModalIsVisible] = useState(initialVisibility)
@@ -77,6 +71,7 @@ export default function CustomTimePicker(props: PropType) {
                                      cancelLabel = {t("description.cancel")}
                                      hours={selectedHour ? selectedHour : currentTime.getHours()}
                                      minutes={selectedMinute ? selectedMinute : currentTime.getMinutes()}
+
                                      uppercase={true}
                                      animationType={"fade"}
                     />

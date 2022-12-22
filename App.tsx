@@ -12,15 +12,23 @@ import "./src/config/i18n/config";
 import "intl";
 import notifee, {EventType} from "@notifee/react-native";
 
-// on top of your index.android.js file
+/**
+ *  on top of your index.android.js file
+ */
 const isAndroid = require('react-native').Platform.OS === 'android'; // this line is only needed if you don't use an .android.js file
 
-// in your index.js file
-if (isAndroid) {  // this line is only needed if you don't use an .android.js file
-
+/**
+ * in your index.js file
+ */
+if (isAndroid) {
+    /**
+     * this line is only needed if you don't use an .android.js file
+     */
     require('@formatjs/intl-getcanonicallocales/polyfill');
     require('@formatjs/intl-locale/polyfill');
 
+    require('@formatjs/intl-pluralrules/polyfill');
+    require('@formatjs/intl-pluralrules/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
 
     require('@formatjs/intl-pluralrules/polyfill');
     require('@formatjs/intl-pluralrules/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
@@ -42,12 +50,28 @@ if (isAndroid) {  // this line is only needed if you don't use an .android.js fi
 
     require('@formatjs/intl-datetimeformat/add-golden-tz.js');
 
+    require('@formatjs/intl-displaynames/polyfill');
+    require('@formatjs/intl-displaynames/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
 
-    // https://formatjs.io/docs/polyfills/intl-datetimeformat/#default-timezone
+    require('@formatjs/intl-listformat/polyfill');
+    require('@formatjs/intl-listformat/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
+
+    require('@formatjs/intl-numberformat/polyfill');
+    require('@formatjs/intl-numberformat/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
+
+    require('@formatjs/intl-relativetimeformat/polyfill');
+    require('@formatjs/intl-relativetimeformat/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
+
+    require('@formatjs/intl-datetimeformat/polyfill');
+    require('@formatjs/intl-datetimeformat/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
+
+    require('@formatjs/intl-datetimeformat/add-golden-tz.js');
+
+    /**
+     * https://formatjs.io/docs/polyfills/intl-datetimeformat/#default-timezone
+      */
 
     if ('__setDefaultTimeZone' in Intl.DateTimeFormat) {
-
-
         Intl.DateTimeFormat.__setDefaultTimeZone(
             require("expo-localization").timezone
         );
@@ -79,11 +103,6 @@ export default function App() {
     const allReminders: ReminderType[] = []
     const {t} = useTranslation();
     const {clearStorage} = StorageService;
-
-    //todo remove (only for dev purpose)
-    useEffect(() => {
-        clearStorage()
-    }, [])
 
     const globalScreenOptions = {
         headerStyle: {backgroundColor: theme.colors.primary},

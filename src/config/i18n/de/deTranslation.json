@@ -20,9 +20,8 @@
   "FR": "FR",
   "SA": "SA",
   "SU": "SO",
+  "reminderCreated": "Erinnerung wurde erstellt",
   "deleteMessage": "Die Erinnerung wurde gelöscht",
   "errorMessageFillAllFields": "Alle Felder müssen ausgefüllt werden!",
   "errorMessageInvalidTime": "Bitte geben Sie eine valide Zeit ein",
-  "test": "Das ist Deutsch"
 }
-}}
