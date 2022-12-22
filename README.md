@@ -31,8 +31,7 @@ What you'll need before installing:
   press ```m``` to open the dev-menu on your phone  
   press ```?``` for additional commands  
   press ```a``` to open the app in the android emulator locally  
-  press ```i``` to open the app in the IOS emuulator locally  
-> :warning: **Will only work on a MacOS system**: don't try on windows!  
+  press ```i``` to open the app in the IOS emuulator locally > :warning: **Will only work on a MacOS system**: don't try on windows!  
 
 
 
