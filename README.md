@@ -21,3 +21,8 @@ What you'll need before installing:
 4. After installing ell packages run ```yarn start``` to start up the metro bundler or ```yarn start android``` to do the same but also open the app in your local emulator
 5. After running one of those commands, you'll get a QR code in your command prompt which you can scan on your mobile phone (either directly in the expo go app on android or in the camera on IOS, which will redirect you to the expo go app)
 > :warning: **You need to be connected to the same network as your computer**: Be very careful here!
+6. Enjoy our app :)
+
+### Additional information
+-- if your QR isn't scannable or redirects you to a browser, try ```yarn expo start --tunnel``` instead and scan the new QR code. 
+the menu which expo gives you in the command prompt works as followed:
