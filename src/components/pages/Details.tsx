@@ -18,15 +18,16 @@ type PropType = {
 export default function Details(props:PropType) {
     const {navigation, route} = props
     const {reminder, reminders} = route.params;
-
     const theme = useTheme();
     const [enteredText, setEnteredText] = useState(reminder ? reminder.title : "");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
     const [selectedReminder, setSelectedReminder] = useState<ReminderType>(reminder ? reminder : {} as ReminderType)
     const [enteredTime, setEnteredTime] = useState<Moment>();
+    const [allReminders, setAllReminders] = useState<ReminderType[]>([])
     const [selectedDays, setSelectedDays] = useState<WeekdayType[]>([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
     const [snackbarMessage, setSnackbarMessage] = useState<string>("Error")
+    const [reminderExists, setReminderExists] = useState<boolean>(false)
     const {t} = useTranslation()
     const bgStyles = StyleSheet.create({
         background:{
@@ -40,6 +41,7 @@ export default function Details(props:PropType) {
         console.log("reminders before useEffect", allReminders)
         if (reminder) {
             setSelectedReminder(reminder)
+            setReminderExists(true)
         }
         console.log("params", reminders)
         setAllReminders(reminders)
@@ -47,29 +49,23 @@ export default function Details(props:PropType) {
     }, [])
 
     const handleSave = () => {
-
-        //todo fix spread operator error
         if (selectedDays.length && enteredText && enteredTime) {
             setIsSnackbarVisible(false)
             const tempReminder: ReminderType = {
                 days: selectedDays,
                 repeat: selectedRepeat,
-                isActive: true,
+                Active: true,
                 id: 0,
                 time: enteredTime,
-                title: enteredText
+                title: enteredText,
             }
-            /*
-            if (Array.isArray(allReminders)) {
-                storeData("allReminders", JSON.stringify([...allReminders, tempReminder])).then(() => navigation.navigate("Home"));
-            } */
             navigation.navigate({
                 name: "Home",
-                params: { newReminder: tempReminder},
+                params: { newReminder: tempReminder, existing: reminderExists},
                 merge: true
             })
         } else {
-            setErrorText("Please fill out every field")
+            setSnackbarMessage("Please fill out every field")
             setIsSnackbarVisible(true)
         }
     }
@@ -109,19 +105,20 @@ export default function Details(props:PropType) {
                         theme={theme}
                         style={{height: "100%"}}
                         defaultValue={enteredText}
+                        maxLength={35}
                     />
                 </View>
-                <View style={[styles.container, styles.clockContainer]}>
+                <View style={[styles.container, styles.clockContainer,bgStyles.background]}>
                     <CustomTimePicker initialVisibility={false}
                                       handleConfirm={handleTimeConfirm}
                                       selectedTime={selectedReminder.time}
                     />
                 </View>
-                <View style={styles.container}>
+                <View style={[styles.container,bgStyles.background]}>
                     <WeekdayBar handleStateChange={handleWeekdayPress}
                                 selectedValues={selectedReminder.days}/>
                 </View>
-                <View style={styles.container}>
+                <View style={[styles.container,bgStyles.background]}>
                     <RepeatBar handleChange={handleRepeatChange}
                                selectedValue={selectedReminder.repeat}/>
                 </View>

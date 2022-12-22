@@ -11,7 +11,7 @@ import SwitchButton from "../atoms/toggleSwitch";
 import moment from "moment";
 import {useIsFocused} from "@react-navigation/native";
 import SnackbarContent from "../molecules/Snackbar";
- *
+ /**
  * @param navigation
  * @constructor
  */
@@ -22,8 +22,6 @@ export default function Home({navigation, route}) {
     const {storeData, getData} = StorageService;
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
     const [reminders, setRemiders] = useState<ReminderType[]>([])
-    const [lastId, setLastId] = useState<number>(0)
-
     function deleteReminder(reminder: ReminderType) {
         let removeIndex = [...reminders].findIndex((reminderToDelete) => reminderToDelete.id === reminder.id)
         console.log("indexToRemove", removeIndex);
@@ -50,17 +48,22 @@ export default function Home({navigation, route}) {
         console.log("Entered useEffect")
         if (route.params?.newReminder){
             let newReminder:ReminderType = route.params.newReminder;
-            newReminder.id = lastId
-            setRemiders([...reminders, newReminder])
-            console.log("set reminders", reminders)
-            let newLastId = lastId;
-            setLastId(++newLastId);
+            console.log(route.params.existing)
+            if (route.params.existing === false) {
+                let index: number;
+                if (reminders.length !== 0) {
+                    let sortedReminders = [...reminders].sort((r1, r2) => (r1.id > r2.id) ? 1 : (r1.id < r2.id) ? -1 : 0)
+                    index = reminders.findIndex((reminder) => reminder === sortedReminders[sortedReminders.length - 1])
+                }
+                newReminder.id = reminders.length !== 0 ? ++index : 0
+                setRemiders([...reminders, newReminder])
+                console.log("set reminders", reminders)
+            }else{
+                setRemiders(reminders.map((value) => value.id === newReminder.id ? newReminder : value))
+            }
         }
     },[route.params?.newReminder])
 
-    /*const onSave = useCallback((reminder: ReminderType) => {
-            setRemiders([...reminders, reminder])
-        },[reminders]) */
     return (
         <View style={styles.container}>
             <ImageBackground source={require('./../../../assets/background.png')}

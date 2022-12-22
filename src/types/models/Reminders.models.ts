@@ -7,5 +7,5 @@ title: string,
 time: Moment,
 days: WeekdayType[],
 repeat: string,
-isActive: boolean
+Active: boolean,
 }

@@ -19,9 +19,7 @@ type PropType = {
  * @param props
  */
 export default function (props:PropType) {
-    const theme = useTheme();
     const {handleStateChange, selectedValues} = props;
-
     const {t} = useTranslation()
     const theme = useTheme();
     const [weekdays, setWeekdays] = useState<WeekdayType[]>([
