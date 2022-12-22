@@ -24,5 +24,14 @@ What you'll need before installing:
 6. Enjoy our app :)
 
 ### Additional information
--- if your QR isn't scannable or redirects you to a browser, try ```yarn expo start --tunnel``` instead and scan the new QR code. 
-the menu which expo gives you in the command prompt works as followed:
+- if your QR isn't scannable or redirects you to a browser, try ```yarn expo start --tunnel``` instead and scan the new QR code. 
+- the menu which expo gives you in the command prompt works as followed:
+  press ```c``` to show the QR code if you need it again
+  press ```r``` to hard reload the app
+  press ```a``` to open the app in the android emulator locally
+  press ```i``` to open the app in the IOS emuulator locally
+> :warning: **Will only work on a MacOS system**: don't try on windows
+  press ```m``` to open the dev-menu on your phone
+  press ```?``` for additional commands
+
+
