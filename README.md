@@ -30,7 +30,7 @@ What you'll need before installing:
   press ```r``` to hard reload the app  
   press ```a``` to open the app in the android emulator locally  
   press ```i``` to open the app in the IOS emuulator locally  
-> :warning: **Will only work on a MacOS system**: don't try on windows  
+> :warning: **Will only work on a MacOS system**: don't try on windows
   press ```m``` to open the dev-menu on your phone  
   press ```?``` for additional commands  
 
