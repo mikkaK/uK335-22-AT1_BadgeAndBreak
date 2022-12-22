@@ -1,8 +1,10 @@
-import {useCallback, useState} from "react";
-import {View, StyleSheet} from "react-native";
-import {useTheme, IconButton} from 'react-native-paper';
-import {TimePickerModal, en, de, nl, enGB, registerTranslation} from "react-native-paper-dates";
+import {useCallback, useEffect, useState} from "react";
+import {StyleSheet, View} from "react-native";
+import {IconButton, useTheme} from 'react-native-paper';
+import {de, en, enGB, nl, registerTranslation, TimePickerModal} from "react-native-paper-dates";
 import "intl";
+import moment, {Moment} from "moment";
+
 import {useTranslation} from "react-i18next";
 import {styles} from "../../styles/timePicker.styles"
 
@@ -15,23 +17,38 @@ type PropType = {
         hours: number;
         minutes: number;
     }) => any;
+    selectedTime?: Moment
 }
-
 /**
  *
  * @param props
  * @constructor
  */
+
 export default function CustomTimePicker(props: PropType) {
-    const {initialVisibility, handleConfirm} = props;
+    const {initialVisibility, handleConfirm, selectedTime} = props;
     const [modalIsVisible, setModalIsVisible] = useState(initialVisibility)
     const theme = useTheme();
     const currentTime = new Date();
     const {t} = useTranslation()
+    const [selectedHour, setSelectedHour] = useState<number>()
+    const [selectedMinute, setSelectedMinute] = useState<number>()
 
     const handleDismiss = useCallback(() => {
         setModalIsVisible(false)
     }, [setModalIsVisible])
+
+    useEffect(() => {
+        if (selectedTime) {
+            const parsedTime:Moment = moment(selectedTime);
+            setSelectedHour(parsedTime.hour())
+            setSelectedMinute(parsedTime.minute())
+        }
+    }, [selectedTime])
+
+    useEffect(() => {
+        console.log(selectedMinute)
+    }, [selectedMinute]);
 
 
     return (
@@ -51,9 +68,10 @@ export default function CustomTimePicker(props: PropType) {
                                          setModalIsVisible(false);
                                      }}
                                      label={t("description.enterTimeClock")}
-                                     cancelLabel={t("description.cancel")}
-                                     hours={currentTime.getHours()}
-                                     minutes={currentTime.getMinutes()}
+                                     cancelLabel = {t("description.cancel")}
+                                     hours={selectedHour ? selectedHour : currentTime.getHours()}
+                                     minutes={selectedMinute ? selectedMinute : currentTime.getMinutes()}
+
                                      uppercase={true}
                                      animationType={"fade"}
                     />

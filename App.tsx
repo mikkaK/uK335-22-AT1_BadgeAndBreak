@@ -1,9 +1,6 @@
 import {createStackNavigator} from "@react-navigation/stack";
 import {NavigationContainer} from "@react-navigation/native";
-import {
-    MD3LightTheme as DefaultTheme,
-    Provider as PaperProvider,
-} from "react-native-paper";
+import {MD3LightTheme as DefaultTheme, Provider as PaperProvider,} from "react-native-paper";
 import Home from "./src/components/pages/Home";
 import Details from "./src/components/pages/Details";
 import {NativeRouter} from "react-router-native";
@@ -12,6 +9,8 @@ import StorageService from "./src/services/StorageService";
 import {ReminderType} from "./src/types/models/Reminders.models";
 import {useTranslation} from "react-i18next";
 import "./src/config/i18n/config";
+import "intl";
+import notifee, {EventType} from "@notifee/react-native";
 
 /**
  *  on top of your index.android.js file
@@ -28,6 +27,8 @@ if (isAndroid) {
     require('@formatjs/intl-getcanonicallocales/polyfill');
     require('@formatjs/intl-locale/polyfill');
 
+    require('@formatjs/intl-pluralrules/polyfill');
+    require('@formatjs/intl-pluralrules/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
 
     require('@formatjs/intl-pluralrules/polyfill');
     require('@formatjs/intl-pluralrules/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
@@ -49,6 +50,22 @@ if (isAndroid) {
 
     require('@formatjs/intl-datetimeformat/add-golden-tz.js');
 
+    require('@formatjs/intl-displaynames/polyfill');
+    require('@formatjs/intl-displaynames/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
+
+    require('@formatjs/intl-listformat/polyfill');
+    require('@formatjs/intl-listformat/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
+
+    require('@formatjs/intl-numberformat/polyfill');
+    require('@formatjs/intl-numberformat/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
+
+    require('@formatjs/intl-relativetimeformat/polyfill');
+    require('@formatjs/intl-relativetimeformat/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
+
+    require('@formatjs/intl-datetimeformat/polyfill');
+    require('@formatjs/intl-datetimeformat/locale-data/en.js'); // USE YOUR OWN LANGUAGE OR MULTIPLE IMPORTS YOU WANT TO SUPPORT
+
+    require('@formatjs/intl-datetimeformat/add-golden-tz.js');
 
     /**
      * https://formatjs.io/docs/polyfills/intl-datetimeformat/#default-timezone
@@ -82,15 +99,10 @@ const theme = {
 }
 
 const Stack = createStackNavigator<RootStackParamList>()
-
 export default function App() {
-    const allReminders: ReminderType[] = [{} as ReminderType]
-    const {storeData} = StorageService
+    const allReminders: ReminderType[] = []
     const {t} = useTranslation();
-
-    useEffect(() => {
-        storeData("allReminders", allReminders.toString());
-    }, [])
+    const {clearStorage} = StorageService;
 
     const globalScreenOptions = {
         headerStyle: {backgroundColor: theme.colors.primary},

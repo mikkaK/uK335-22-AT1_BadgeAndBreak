@@ -1,7 +1,7 @@
 import {StyleSheet, View} from "react-native";
 import {Avatar, TouchableRipple, useTheme} from "react-native-paper";
 import WeekDays from "../../config/WeekDays";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {WeekdayType} from "../../types/WeekDayType";
 import {useTranslation} from "react-i18next";
 import {styles} from "../../styles/weekdayBar.styles"
@@ -11,13 +11,17 @@ type PropType = {
         isSelected: boolean,
         value: string
     }) => any;
+
+    selectedValues?: WeekdayType[];
 }
 /**
  *
  * @param props
  */
 export default function (props:PropType) {
-    const {handleStateChange} = props;
+    const theme = useTheme();
+    const {handleStateChange, selectedValues} = props;
+
     const {t} = useTranslation()
     const theme = useTheme();
     const [weekdays, setWeekdays] = useState<WeekdayType[]>([

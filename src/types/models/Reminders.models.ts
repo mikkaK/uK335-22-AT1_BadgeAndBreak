@@ -1,9 +1,10 @@
 import {WeekdayType} from "../WeekDayType";
+import {Moment} from "moment";
 
 export type ReminderType = {
 id: number,
 title: string,
-time: string,
+time: Moment,
 days: WeekdayType[],
 repeat: string,
 isActive: boolean

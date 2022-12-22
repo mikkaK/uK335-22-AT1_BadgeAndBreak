@@ -7,25 +7,22 @@ import {useTranslation} from "react-i18next";
 import {styles} from "../../styles/repeatBar.styles"
 type PropType = {
     handleChange:( value:string ) => any;
+    selectedValue?:string;
 }
 /**
  *
  * @param props
  */
 export default function (props:PropType) {
-    const { handleChange } = props;
+    const { handleChange, selectedValue } = props;
     const theme = useTheme();
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
-    const [repeat, setRepeat] = useState<string>("never")
+    const [repeat, setRepeat] = useState<string>(selectedValue ? selectedValue : "never")
     const {t} = useTranslation()
     const repeatOptions = [
         {
             label: t("description.never"),
             value: Repeat.NEVER_REPEAT,
-        },
-        {
-            label: t("description.daily"),
-            value: Repeat.DAILY_REPEAT,
         },
         {
             label: t("description.weekly"),
