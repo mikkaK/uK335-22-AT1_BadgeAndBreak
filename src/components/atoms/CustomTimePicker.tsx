@@ -47,7 +47,7 @@ export default function CustomTimePicker(props: PropType) {
     }, [selectedTime])
 
     useEffect(() => {
-        console.log(selectedMinute)
+
     }, [selectedMinute]);
 
 

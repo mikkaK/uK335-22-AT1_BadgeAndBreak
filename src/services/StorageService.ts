@@ -4,7 +4,7 @@ const storeData = async (key: string, value: string) => {
     try {
         await AsyncStorage.setItem(key, value);
     } catch (e) {
-        console.log("errrrorrr")
+
     }
 };
 
@@ -15,7 +15,7 @@ const getData = async (key: string) => {
             return value;
         }
     } catch (e) {
-        console.log("erererririri")
+
     }
 };
 

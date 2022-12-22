@@ -12,9 +12,10 @@ import moment from "moment";
 import {useIsFocused} from "@react-navigation/native";
 import SnackbarContent from "../molecules/Snackbar";
  /**
- * @param navigation
- * @constructor
- */
+  * @param navigation
+  * @param route
+  * @constructor
+  */
 export default function Home({navigation, route}) {
 
     const {t} = useTranslation()
@@ -24,7 +25,6 @@ export default function Home({navigation, route}) {
     const [reminders, setRemiders] = useState<ReminderType[]>([])
     function deleteReminder(reminder: ReminderType) {
         let removeIndex = [...reminders].findIndex((reminderToDelete) => reminderToDelete.id === reminder.id)
-        console.log("indexToRemove", removeIndex);
         if (removeIndex !== -1){
             let newReminders:ReminderType[] = [...reminders].filter((reminderItem) => {
                 return reminderItem.id !== reminder.id
@@ -32,23 +32,14 @@ export default function Home({navigation, route}) {
           setRemiders(newReminders)
         }
     }
-    const isFocused = useIsFocused();
+    useEffect(() => {
+        getData("allReminders").then((value) => setRemiders(JSON.parse(value)))
+    },[])
 
-    /*useEffect(() => {
-        getData("allReminders").then(value => {
-            console.log("unparsed value from isFocused useEffect", value)
-            setRemiders(JSON.parse(value))
-        }).then(() => {
-            console.log("reminders variable after isFocused useEffect", reminders)
-        })
-        console.log("reminders on homepage", reminders)
-    }, [isFocused]) */
 
     useEffect(() => {
-        console.log("Entered useEffect")
         if (route.params?.newReminder){
             let newReminder:ReminderType = route.params.newReminder;
-            console.log(route.params.existing)
             if (route.params.existing === false) {
                 let index: number;
                 if (reminders.length !== 0) {
@@ -57,10 +48,10 @@ export default function Home({navigation, route}) {
                 }
                 newReminder.id = reminders.length !== 0 ? ++index : 0
                 setRemiders([...reminders, newReminder])
-                console.log("set reminders", reminders)
             }else{
                 setRemiders(reminders.map((value) => value.id === newReminder.id ? newReminder : value))
             }
+            storeData("allReminders", JSON.stringify(reminders));
         }
     },[route.params?.newReminder])
 
