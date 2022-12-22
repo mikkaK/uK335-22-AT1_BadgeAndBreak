@@ -93,7 +93,7 @@ export default function Details() {
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
 
-            <View style={styles.container}>
+            <View style={{...styles.container,backgroundColor:theme.colors.primary}}>
                 <TextInput
                     label={t("description.label")}
                     placeholder={t("description.placeholderTextFiled")}

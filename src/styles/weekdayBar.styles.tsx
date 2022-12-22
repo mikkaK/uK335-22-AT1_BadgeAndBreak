@@ -1,7 +1,5 @@
 import {StyleSheet} from "react-native";
-import { useTheme} from 'react-native-paper';
 
-const theme = useTheme();
 export const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
@@ -18,12 +16,7 @@ export const styles = StyleSheet.create({
         shadowOffset: {width: 1, height: 0.5},
 
     },
-    button: {
-        backgroundColor: theme.colors.primaryContainer,
-
-    },
     buttonSelected: {
-        backgroundColor: theme.colors.secondary,
         borderColor: "#000000",
         border: "solid",
         borderRadius: 50,

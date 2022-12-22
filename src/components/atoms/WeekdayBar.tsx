@@ -19,6 +19,7 @@ type PropType = {
 export default function (props:PropType) {
     const {handleStateChange} = props;
     const {t} = useTranslation()
+    const theme = useTheme();
     const [weekdays, setWeekdays] = useState<WeekdayType[]>([
         {
             isSelected: false,
@@ -75,7 +76,7 @@ export default function (props:PropType) {
                         <TouchableRipple onPress={() => handlePress(item)}>
                         <Avatar.Text size={40}
                                      label={item.value}
-                                     style={item.isSelected ? styles.buttonSelected : styles.button}
+                                     style={item.isSelected ? {...styles.buttonSelected, backgroundColor: theme.colors.secondary} : {backgroundColor: theme.colors.primaryContainer}}
                                      labelStyle={{fontWeight: "bold", fontSize: 17}}
                         />
                         </TouchableRipple>
