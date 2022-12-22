@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import {ImageBackground, Text, View} from "react-native";
+import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import {Button, Snackbar, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
@@ -23,6 +23,11 @@ export default function Details() {
     const {t} = useTranslation()
 
 
+    const bgStyles = StyleSheet.create({
+        background:{
+            backgroundColor: theme.colors.primary
+        }
+    })
 
 
     useEffect(() => {
@@ -93,7 +98,7 @@ export default function Details() {
             <ImageBackground source={require('./../../../assets/background.png')}
                              style={{width: '100%', height: '100%'}}>
 
-            <View style={{...styles.container,backgroundColor:theme.colors.primary}}>
+            <View style={[styles.container,bgStyles.background]}>
                 <TextInput
                     label={t("description.label")}
                     placeholder={t("description.placeholderTextFiled")}
@@ -103,15 +108,15 @@ export default function Details() {
                     style={{height: "100%"}}
                 />
             </View>
-            <View style={[styles.container, styles.clockContainer]}>
+            <View style={[styles.container, styles.clockContainer,bgStyles.background]}>
                 <CustomTimePicker initialVisibility={false}
                                   handleConfirm={handleTimeConfirm}
                 />
             </View>
-            <View style={styles.container}>
+            <View style={[styles.container,bgStyles.background]}>
                 <WeekdayBar handleStateChange={handleWeekdayPress}/>
             </View>
-            <View style={styles.container}>
+            <View style={[styles.container,bgStyles.background]}>
                 <RepeatBar handleChange={handleRepeatChange}/>
             </View>
             <View style={[styles.container, styles.saveContainer]}>
