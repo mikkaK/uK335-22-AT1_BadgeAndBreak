@@ -78,8 +78,11 @@ const Stack = createStackNavigator<RootStackParamList>()
 export default function App() {
     const allReminders: ReminderType[] = []
     const {t} = useTranslation();
+    const {clearStorage} = StorageService;
 
+    //todo remove (only for dev purpose)
     useEffect(() => {
+        clearStorage()
     }, [])
 
     const globalScreenOptions = {

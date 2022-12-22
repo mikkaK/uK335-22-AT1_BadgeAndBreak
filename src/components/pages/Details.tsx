@@ -10,12 +10,17 @@ import {WeekdayType} from "../../types/WeekDayType";
 import moment, {Moment} from "moment";
 import {useTranslation} from "react-i18next";
 import SnackbarContent from "../molecules/Snackbar";
-
-export default function Details({navigation, route}) {
+type PropType = {
+    navigation,
+    route,
+}
+export default function Details(props:PropType) {
+    const {navigation, route} = props
+    const {reminder, reminders} = route.params;
     const theme = useTheme();
-    const [enteredText, setEnteredText] = useState(route.params.reminder ? route.params.reminder.title : "");
+    const [enteredText, setEnteredText] = useState(reminder ? reminder.title : "");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
-    const [selectedReminder, setSelectedReminder] = useState<ReminderType>(route.params.reminder ? route.params.reminder : {} as ReminderType)
+    const [selectedReminder, setSelectedReminder] = useState<ReminderType>(reminder ? reminder : {} as ReminderType)
     const [enteredTime, setEnteredTime] = useState<Moment>();
     const [selectedDays, setSelectedDays] = useState<WeekdayType[]>([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
@@ -55,20 +60,16 @@ export default function Details({navigation, route}) {
 
     useEffect(() => {
         console.log("reminders before useEffect", allReminders)
-        if (route.params.reminder) {
-            setSelectedReminder(route.params.reminder)
+        if (reminder) {
+            setSelectedReminder(reminder)
         }
-        console.log("params", route.params.reminders)
-        setAllReminders(route.params.reminders)
+        console.log("params", reminders)
+        setAllReminders(reminders)
         console.log("reminders at end of useEffect", allReminders)
     }, [])
 
     const handleSave = () => {
-        let idOfLastIndex = 0;
-        if (allReminders.length !== 0 && Array.isArray(allReminders)) {
-            const sortedReminders = [...allReminders].sort((r1, r2) => (r1.id < r2.id) ? 1 : (r1.id > r2.id) ? -1 : 0)
-            idOfLastIndex = sortedReminders[0].id
-        }
+
         //todo fix spread operator error
         if (selectedDays.length && enteredText && enteredTime) {
             setIsSnackbarVisible(false)
@@ -76,13 +77,19 @@ export default function Details({navigation, route}) {
                 days: selectedDays,
                 repeat: selectedRepeat,
                 isActive: true,
-                id: ++idOfLastIndex,
+                id: 0,
                 time: enteredTime,
                 title: enteredText
             }
+            /*
             if (Array.isArray(allReminders)) {
                 storeData("allReminders", JSON.stringify([...allReminders, tempReminder])).then(() => navigation.navigate("Home"));
-            }
+            } */
+            navigation.navigate({
+                name: "Home",
+                params: { newReminder: tempReminder},
+                merge: true
+            })
         } else {
             setErrorText("Please fill out every field")
             setIsSnackbarVisible(true)
@@ -94,7 +101,7 @@ export default function Details({navigation, route}) {
         time.hours(hours)
         time.minutes(minutes)
         setEnteredTime(time);
-    }, [enteredTime])//maybe remove input
+    }, [enteredTime])
 
     const handleWeekdayPress = useCallback((item: WeekdayType) => {
         let selectedDaysCopy = [...selectedDays];
