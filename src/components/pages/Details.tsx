@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
-import {Button, Snackbar, TextInput, useTheme} from 'react-native-paper';
+import {Button, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
 import RepeatBar from "../atoms/RepeatBar";
@@ -19,10 +19,10 @@ export default function Details({navigation, route}) {
     const [enteredTime, setEnteredTime] = useState<Moment>();
     const [selectedDays, setSelectedDays] = useState<WeekdayType[]>([])
     const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
-    const [snackbarMessage,setSnackbarMessage] = useState<string>("Error")
+    const [snackbarMessage, setSnackbarMessage] = useState<string>("Error")
     const {t} = useTranslation()
     const [errorText, setErrorText] = useState<string>("An undefined error occurred")
-    const [allReminders, setAllReminders] = useState<ReminderType[]>()
+    const [allReminders, setAllReminders] = useState<ReminderType[]>([])
     const {storeData, getData} = StorageService;
     const styles = StyleSheet.create({
         container: {
@@ -54,16 +54,18 @@ export default function Details({navigation, route}) {
 
 
     useEffect(() => {
+        console.log("reminders before useEffect", allReminders)
         if (route.params.reminder) {
             setSelectedReminder(route.params.reminder)
         }
+        console.log("params", route.params.reminders)
         setAllReminders(route.params.reminders)
-
+        console.log("reminders at end of useEffect", allReminders)
     }, [])
 
     const handleSave = () => {
         let idOfLastIndex = 0;
-        if (allReminders.length !== 0) {
+        if (allReminders.length !== 0 && Array.isArray(allReminders)) {
             const sortedReminders = [...allReminders].sort((r1, r2) => (r1.id < r2.id) ? 1 : (r1.id > r2.id) ? -1 : 0)
             idOfLastIndex = sortedReminders[0].id
         }
@@ -78,13 +80,9 @@ export default function Details({navigation, route}) {
                 time: enteredTime,
                 title: enteredText
             }
-            if (allReminders.length !== 0) {
-                storeData("allReminders", JSON.stringify(tempReminder)).then(() => navigation.navigate("Home"));
-
-            }else{
+            if (Array.isArray(allReminders)) {
                 storeData("allReminders", JSON.stringify([...allReminders, tempReminder])).then(() => navigation.navigate("Home"));
             }
-
         } else {
             setErrorText("Please fill out every field")
             setIsSnackbarVisible(true)
@@ -151,8 +149,8 @@ export default function Details({navigation, route}) {
                 </View>
                 <View style={[styles.container, styles.snackbarContainer]}>
                     <SnackbarContent message={snackbarMessage} visibility={isSnackbarVisible}
-                        setVisibility={
-                            setIsSnackbarVisible}/>
+                                     setVisibility={
+                                         setIsSnackbarVisible}/>
                 </View>
             </ImageBackground>
         </>);

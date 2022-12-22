@@ -29,7 +29,10 @@ export default function Home({navigation}) {
 
     useEffect(() => {
         getData("allReminders").then(value => {
+            console.log("unparsed value from isFocused useEffect", value)
             setRemiders(JSON.parse(value))
+        }).then(() => {
+            console.log("reminders variable after isFocused useEffect", reminders)
         })
         console.log("reminders on homepage", reminders)
     }, [isFocused])
