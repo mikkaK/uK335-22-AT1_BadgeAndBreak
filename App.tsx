@@ -4,13 +4,11 @@ import {MD3LightTheme as DefaultTheme, Provider as PaperProvider,} from "react-n
 import Home from "./src/components/pages/Home";
 import Details from "./src/components/pages/Details";
 import {NativeRouter} from "react-router-native";
-import {useEffect} from "react";
 import StorageService from "./src/services/StorageService";
 import {ReminderType} from "./src/types/models/Reminders.models";
 import {useTranslation} from "react-i18next";
 import "./src/config/i18n/config";
 import "intl";
-import notifee, {EventType} from "@notifee/react-native";
 
 /**
  *  on top of your index.android.js file
@@ -69,7 +67,7 @@ if (isAndroid) {
 
     /**
      * https://formatjs.io/docs/polyfills/intl-datetimeformat/#default-timezone
-      */
+     */
 
     if ('__setDefaultTimeZone' in Intl.DateTimeFormat) {
         Intl.DateTimeFormat.__setDefaultTimeZone(

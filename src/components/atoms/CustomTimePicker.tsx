@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
 import {IconButton, useTheme} from 'react-native-paper';
-import {de, en, enGB, nl, registerTranslation, TimePickerModal} from "react-native-paper-dates";
+import {de, en, registerTranslation, TimePickerModal} from "react-native-paper-dates";
 import "intl";
 import moment, {Moment} from "moment";
 
@@ -40,7 +40,7 @@ export default function CustomTimePicker(props: PropType) {
 
     useEffect(() => {
         if (selectedTime) {
-            const parsedTime:Moment = moment(selectedTime);
+            const parsedTime: Moment = moment(selectedTime);
             setSelectedHour(parsedTime.hour())
             setSelectedMinute(parsedTime.minute())
         }
@@ -68,7 +68,7 @@ export default function CustomTimePicker(props: PropType) {
                                          setModalIsVisible(false);
                                      }}
                                      label={t("description.enterTimeClock")}
-                                     cancelLabel = {t("description.cancel")}
+                                     cancelLabel={t("description.cancel")}
                                      hours={selectedHour ? selectedHour : currentTime.getHours()}
                                      minutes={selectedMinute ? selectedMinute : currentTime.getMinutes()}
 

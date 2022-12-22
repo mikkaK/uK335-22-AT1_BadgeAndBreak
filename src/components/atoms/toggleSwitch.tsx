@@ -4,7 +4,6 @@ import {styles} from '../../styles/home.styles';
 
 
 const SwitchButton = () => {
-
     const [isSwitchOn, setIsSwitchOn] = React.useState(false);
     const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 

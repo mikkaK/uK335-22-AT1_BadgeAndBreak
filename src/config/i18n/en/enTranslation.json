@@ -22,7 +22,7 @@
       "SU": "SU",
       "reminderCreated": "Reminder was created",
       "deleteMessage": "The reminder got deleted",
-      "errorMessageFillAllFields": "Please fill out every field",
+      "errorMessageFillAllFields": "Please fill out every field"
     }
   }
 }

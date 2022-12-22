@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
-import {Button, MD3Colors, Snackbar, TextInput, useTheme} from 'react-native-paper';
+import {Button, TextInput, useTheme} from 'react-native-paper';
 import CustomTimePicker from "../atoms/CustomTimePicker";
 import WeekdayBar from "../atoms/WeekdayBar";
 import RepeatBar from "../atoms/RepeatBar";
@@ -10,28 +10,29 @@ import moment, {Moment} from "moment";
 import {useTranslation} from "react-i18next";
 import SnackbarContent from "../molecules/Snackbar";
 import {styles} from '../../styles/detail.styles';
+
 type PropType = {
     navigation,
     route,
 }
-export default function Details(props:PropType) {
+export default function Details(props: PropType) {
     const {navigation, route} = props
     const {reminder, reminders} = route.params;
     const theme = useTheme();
     const [enteredText, setEnteredText] = useState(reminder ? reminder.title : "");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
-    const [selectedReminder, setSelectedReminder] = useState<ReminderType>(reminder ? reminder : {} as ReminderType)
+    const [selectedReminder] = useState<ReminderType>(reminder ? reminder : {} as ReminderType)
     const [enteredTime, setEnteredTime] = useState<Moment>(reminder ? reminder.time : moment());
     const [allReminders, setAllReminders] = useState<ReminderType[]>([])
     const [selectedDays, setSelectedDays] = useState<WeekdayType[]>(reminder ? reminder.days : [])
     const [selectedRepeat, setSelectedRepeat] = useState<string>(reminder ? reminder.repeat : "never")
     const [snackbarMessage, setSnackbarMessage] = useState<string>("Error")
     const [reminderExists, setReminderExists] = useState<boolean>(false)
-    const [snackbarColor,setSnackbarColor] = useState<String>();
+    const [snackbarColor, setSnackbarColor] = useState<String>();
     const {t} = useTranslation()
     const errorMessageFields = t("description.errorMessageFillAllFields")
     const bgStyles = StyleSheet.create({
-        background:{
+        background: {
             backgroundColor: theme.colors.primary
         }
 
@@ -42,7 +43,7 @@ export default function Details(props:PropType) {
         console.log("reminders before useEffect", allReminders)
         if (reminder) {
             setReminderExists(true)
-            console.log("days",selectedReminder.days)
+            console.log("days", selectedReminder.days)
         }
         console.log("params", reminders)
         setAllReminders(reminders)
@@ -61,7 +62,7 @@ export default function Details(props:PropType) {
             }
             navigation.navigate({
                 name: "Home",
-                params: { newReminder: tempReminder, existing: reminderExists},
+                params: {newReminder: tempReminder, existing: reminderExists},
                 merge: true
             })
         } else {
@@ -109,17 +110,17 @@ export default function Details(props:PropType) {
                         maxLength={35}
                     />
                 </View>
-                <View style={[styles.container, styles.clockContainer,bgStyles.background]}>
+                <View style={[styles.container, styles.clockContainer, bgStyles.background]}>
                     <CustomTimePicker initialVisibility={false}
                                       handleConfirm={handleTimeConfirm}
                                       selectedTime={selectedReminder.time}
                     />
                 </View>
-                <View style={[styles.container,bgStyles.background]}>
+                <View style={[styles.container, bgStyles.background]}>
                     <WeekdayBar handleStateChange={handleWeekdayPress}
                                 selectedValues={selectedReminder.days}/>
                 </View>
-                <View style={[styles.container,bgStyles.background]}>
+                <View style={[styles.container, bgStyles.background]}>
                     <RepeatBar handleChange={handleRepeatChange}
                                selectedValue={selectedReminder.repeat}/>
                 </View>

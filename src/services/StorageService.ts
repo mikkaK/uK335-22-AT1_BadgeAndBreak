@@ -20,7 +20,7 @@ const getData = async (key: string) => {
 };
 
 const clearStorage = async () => {
-    AsyncStorage.clear()
+    await AsyncStorage.clear()
 }
 const StorageService = {
     storeData,

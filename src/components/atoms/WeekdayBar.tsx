@@ -1,4 +1,4 @@
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
 import {Avatar, TouchableRipple, useTheme} from "react-native-paper";
 import WeekDays from "../../config/WeekDays";
 import {useEffect, useState} from "react";
@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 import {styles} from "../../styles/weekdayBar.styles"
 
 type PropType = {
-    handleStateChange: (stateAndValue : {
+    handleStateChange: (stateAndValue: {
         isSelected: boolean,
         value: string
     }) => any;
@@ -18,7 +18,7 @@ type PropType = {
  *
  * @param props
  */
-export default function (props:PropType) {
+export default function (props: PropType) {
     const {handleStateChange, selectedValues} = props;
     const {t} = useTranslation()
     const theme = useTheme();
@@ -55,24 +55,24 @@ export default function (props:PropType) {
 
     useEffect(() => {
         let weekdaysCopy = [...weekdays];
-        if (selectedValues){
+        if (selectedValues) {
             for (const weekDay of weekdaysCopy) {
                 for (const selectedValue of selectedValues) {
-                    if (selectedValue.value === weekDay.value){
+                    if (selectedValue.value === weekDay.value) {
                         let index = weekdaysCopy.findIndex(item => item.value === selectedValue.value);
                         weekdaysCopy[index].isSelected = true;
                     }
                 }
             }
         }
-    },[selectedValues])
+    }, [selectedValues])
 
     /**
      *
      * @param item
      */
-    const handlePress =(item:WeekdayType) => {
-        const { value } = item;
+    const handlePress = (item: WeekdayType) => {
+        const {value} = item;
         let weekdaysCopy = [...weekdays]
         let index = weekdaysCopy.findIndex(item => item.value === value)
         let toChange = {...weekdaysCopy[index]}
@@ -89,11 +89,14 @@ export default function (props:PropType) {
                 return (
                     <View style={styles.item}>
                         <TouchableRipple onPress={() => handlePress(item)}>
-                        <Avatar.Text size={40}
-                                     label={item.value}
-                                     style={item.isSelected ? {...styles.buttonSelected, backgroundColor: theme.colors.secondary} : {backgroundColor: theme.colors.primaryContainer}}
-                                     labelStyle={{fontWeight: "bold", fontSize: 17}}
-                        />
+                            <Avatar.Text size={40}
+                                         label={item.value}
+                                         style={item.isSelected ? {
+                                             ...styles.buttonSelected,
+                                             backgroundColor: theme.colors.secondary
+                                         } : {backgroundColor: theme.colors.primaryContainer}}
+                                         labelStyle={{fontWeight: "bold", fontSize: 17}}
+                            />
                         </TouchableRipple>
                     </View>
                 )
