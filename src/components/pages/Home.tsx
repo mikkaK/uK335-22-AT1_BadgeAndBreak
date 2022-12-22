@@ -76,11 +76,11 @@ export default function Home({navigation, route}) {
                                     onPress={() =>
                                         navigation.navigate("Details",{reminder, reminders})}
                                     onLongPress={() => {
-                                        deleteReminder(reminder), setIsSnackbarVisible(true)
+                                        deleteReminder(reminder);
+                                        setIsSnackbarVisible(true)
                                     }}>
                                     <Card style={styles.card}>
                                         <Card.Content>
-                                            <Title>{reminder.id}</Title>
                                             <Title>{reminder.title} </Title>
                                             <Text>{t("description.time")} {moment(reminder.time).format("HH:mm")}, {t("description." + reminder.repeat)}</Text>
                                         </Card.Content>
