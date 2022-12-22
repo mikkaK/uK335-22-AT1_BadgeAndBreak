@@ -8,15 +8,14 @@ import {View} from "react-native";
  * @param reminders
  * @constructor
  */
-export default function AddNewReminderFAB({navigation,reminders}) {
-
+export default function AddNewReminderFAB({navigation, reminders}) {
     return (
         <View style={styles.fabView}>
             <FAB
                 icon="plus"
                 style={styles.fab}
                 onPress={() =>
-                navigation.navigate('Details',{reminders})}
+                    navigation.navigate('Details', {reminders})}
             />
         </View>
     )

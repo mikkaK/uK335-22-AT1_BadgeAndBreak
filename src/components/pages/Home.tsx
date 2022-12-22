@@ -1,7 +1,7 @@
-import {Card, Title, TouchableRipple, useTheme} from 'react-native-paper';
+import {Card, Title, TouchableRipple} from 'react-native-paper';
 import {StatusBar} from 'expo-status-bar';
 import {ImageBackground, ScrollView, Text, View} from 'react-native';
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {ReminderType} from '../../types/models/Reminders.models';
 import AddNewReminderFAB from '../atoms/addNewReminderFAB';
 import {styles} from '../../styles/home.styles';
@@ -9,55 +9,46 @@ import {useTranslation} from "react-i18next";
 import StorageService from "../../services/StorageService";
 import SwitchButton from "../atoms/toggleSwitch";
 import moment from "moment";
-import {useIsFocused} from "@react-navigation/native";
 import SnackbarContent from "../molecules/Snackbar";
- /**
+
+/**
  * @param navigation
+ * @param route
  * @constructor
  */
 export default function Home({navigation, route}) {
-    const [snackbarColor,setSnackbarColor] = useState<String>();
-     const [snackbarMessage, setSnackbarMessage] = useState<string>("Error")
+    const [snackbarColor, setSnackbarColor] = useState<String>();
+    const [snackbarMessage, setSnackbarMessage] = useState<string>("Error")
     const {t} = useTranslation()
-    const theme = useTheme();
     const {storeData, getData} = StorageService;
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
     const [reminders, setRemiders] = useState<ReminderType[]>([])
-     const deleteMessage = t("description.deleteMessage")
-     const creatMessage = t("description.created")
+    const deleteMessage = t("description.deleteMessage")
+    const creatMessage = t("description.created")
+
     function deleteReminder(reminder: ReminderType) {
         setSnackbarColor("error")
         setIsSnackbarVisible(true)
         setSnackbarMessage(deleteMessage)
         let removeIndex = [...reminders].findIndex((reminderToDelete) => reminderToDelete.id === reminder.id)
-        console.log("indexToRemove", removeIndex);
-        if (removeIndex !== -1){
-            let newReminders:ReminderType[] = [...reminders].filter((reminderItem) => {
+        if (removeIndex !== -1) {
+            let newReminders: ReminderType[] = [...reminders].filter((reminderItem) => {
                 return reminderItem.id !== reminder.id
             })
-          setRemiders(newReminders)
+            setRemiders(newReminders)
         }
     }
-    const isFocused = useIsFocused();
-
-    /*useEffect(() => {
-        getData("allReminders").then(value => {
-            console.log("unparsed value from isFocused useEffect", value)
-            setRemiders(JSON.parse(value))
-        }).then(() => {
-            console.log("reminders variable after isFocused useEffect", reminders)
-        })
-        console.log("reminders on homepage", reminders)
-    }, [isFocused]) */
 
     useEffect(() => {
+        getData("allReminders").then((value) => setRemiders(JSON.parse(value)))
+    }, [])
 
-        if (route.params?.newReminder){
+    useEffect(() => {
+        if (route.params?.newReminder) {
             setSnackbarColor("success")
             setIsSnackbarVisible(true)
             setSnackbarMessage(creatMessage)
-            let newReminder:ReminderType = route.params.newReminder;
-            console.log(route.params.existing)
+            let newReminder: ReminderType = route.params.newReminder;
             if (route.params.existing === false) {
                 let index: number;
                 if (reminders.length !== 0) {
@@ -66,12 +57,12 @@ export default function Home({navigation, route}) {
                 }
                 newReminder.id = reminders.length !== 0 ? ++index : 0
                 setRemiders([...reminders, newReminder])
-                console.log("set reminders", reminders)
-            }else{
+            } else {
                 setRemiders(reminders.map((value) => value.id === newReminder.id ? newReminder : value))
             }
+            storeData("allReminders", JSON.stringify(reminders));
         }
-    },[route.params?.newReminder])
+    }, [route.params?.newReminder])
 
     return (
         <View style={styles.container}>
@@ -83,13 +74,13 @@ export default function Home({navigation, route}) {
                             {reminders.map(reminder => (
                                 <TouchableRipple
                                     onPress={() =>
-                                        navigation.navigate("Details",{reminder, reminders})}
+                                        navigation.navigate("Details", {reminder, reminders})}
                                     onLongPress={() => {
-                                        deleteReminder(reminder), setIsSnackbarVisible(true)
+                                        deleteReminder(reminder);
+                                        setIsSnackbarVisible(true)
                                     }}>
                                     <Card style={styles.card}>
                                         <Card.Content>
-                                            <Title>{reminder.id}</Title>
                                             <Title>{reminder.title} </Title>
                                             <Text>{t("description.time")} {moment(reminder.time).format("HH:mm")}, {t("description." + reminder.repeat)}</Text>
                                         </Card.Content>
