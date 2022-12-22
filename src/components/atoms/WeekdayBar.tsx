@@ -53,6 +53,20 @@ export default function (props:PropType) {
         }
     ])
 
+    useEffect(() => {
+        let weekdaysCopy = [...weekdays];
+        if (selectedValues){
+            for (const weekDay of weekdaysCopy) {
+                for (const selectedValue of selectedValues) {
+                    if (selectedValue.value === weekDay.value){
+                        let index = weekdaysCopy.findIndex(item => item.value === selectedValue.value);
+                        weekdaysCopy[index].isSelected = true;
+                    }
+                }
+            }
+        }
+    },[selectedValues])
+
     /**
      *
      * @param item
@@ -65,7 +79,6 @@ export default function (props:PropType) {
         toChange.isSelected = !toChange.isSelected
         weekdaysCopy[index] = toChange
         setWeekdays(weekdaysCopy)
-        //todo simplify
         handleStateChange(weekdaysCopy[index]);
     }
 

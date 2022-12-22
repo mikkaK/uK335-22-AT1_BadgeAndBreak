@@ -22,10 +22,10 @@ export default function Details(props:PropType) {
     const [enteredText, setEnteredText] = useState(reminder ? reminder.title : "");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
     const [selectedReminder, setSelectedReminder] = useState<ReminderType>(reminder ? reminder : {} as ReminderType)
-    const [enteredTime, setEnteredTime] = useState<Moment>();
+    const [enteredTime, setEnteredTime] = useState<Moment>(reminder ? reminder.time : moment());
     const [allReminders, setAllReminders] = useState<ReminderType[]>([])
-    const [selectedDays, setSelectedDays] = useState<WeekdayType[]>([])
-    const [selectedRepeat, setSelectedRepeat] = useState<string>("never")
+    const [selectedDays, setSelectedDays] = useState<WeekdayType[]>(reminder ? reminder.days : [])
+    const [selectedRepeat, setSelectedRepeat] = useState<string>(reminder ? reminder.repeat : "never")
     const [snackbarMessage, setSnackbarMessage] = useState<string>("Error")
     const [reminderExists, setReminderExists] = useState<boolean>(false)
     const {t} = useTranslation()
@@ -40,8 +40,8 @@ export default function Details(props:PropType) {
     useEffect(() => {
         console.log("reminders before useEffect", allReminders)
         if (reminder) {
-            setSelectedReminder(reminder)
             setReminderExists(true)
+            console.log("days",selectedReminder.days)
         }
         console.log("params", reminders)
         setAllReminders(reminders)
