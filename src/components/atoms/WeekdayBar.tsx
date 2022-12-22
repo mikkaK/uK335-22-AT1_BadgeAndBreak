@@ -16,7 +16,8 @@ type PropType = {
 }
 /**
  *
- * @param props
+ * @param props (handleStateChange: callBack function for passing the selected values to the Detailspage,
+ *               selectedValues: optional attribute for passing a preselected value to the component)
  */
 export default function (props: PropType) {
     const {handleStateChange, selectedValues} = props;
