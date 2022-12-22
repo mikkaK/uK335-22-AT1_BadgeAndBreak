@@ -16,13 +16,19 @@ import SnackbarContent from "../molecules/Snackbar";
  * @constructor
  */
 export default function Home({navigation, route}) {
-
+    const [snackbarColor,setSnackbarColor] = useState<String>();
+     const [snackbarMessage, setSnackbarMessage] = useState<string>("Error")
     const {t} = useTranslation()
     const theme = useTheme();
     const {storeData, getData} = StorageService;
     const [isSnackbarVisible, setIsSnackbarVisible] = useState<boolean>(false)
     const [reminders, setRemiders] = useState<ReminderType[]>([])
+     const deleteMessage = t("description.deleteMessage")
+     const creatMessage = t("description.created")
     function deleteReminder(reminder: ReminderType) {
+        setSnackbarColor("error")
+        setIsSnackbarVisible(true)
+        setSnackbarMessage(deleteMessage)
         let removeIndex = [...reminders].findIndex((reminderToDelete) => reminderToDelete.id === reminder.id)
         console.log("indexToRemove", removeIndex);
         if (removeIndex !== -1){
@@ -45,8 +51,11 @@ export default function Home({navigation, route}) {
     }, [isFocused]) */
 
     useEffect(() => {
-        console.log("Entered useEffect")
+
         if (route.params?.newReminder){
+            setSnackbarColor("success")
+            setIsSnackbarVisible(true)
+            setSnackbarMessage(creatMessage)
             let newReminder:ReminderType = route.params.newReminder;
             console.log(route.params.existing)
             if (route.params.existing === false) {
@@ -100,8 +109,8 @@ export default function Home({navigation, route}) {
                 <View style={styles.FABContainer}>
                     <AddNewReminderFAB navigation={navigation} reminders={reminders}/>
                 </View>
-                <SnackbarContent message={t("description.deleteMessage")} visibility={isSnackbarVisible}
-                                 setVisibility={setIsSnackbarVisible}/>
+                <SnackbarContent message={snackbarMessage} visibility={isSnackbarVisible}
+                                 setVisibility={setIsSnackbarVisible} color={snackbarColor}/>
             </ImageBackground>
         </View>
 
