@@ -1,67 +1,85 @@
-import { useCallback, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { TextInput, useTheme, IconButton } from 'react-native-paper';
-import { TimePicker, TimePickerModal } from "react-native-paper-dates";
-import {en, de, nl, enGB, registerTranslation} from 'react-native-paper-dates'
+import {useCallback, useEffect, useState} from "react";
+import {View} from "react-native";
+import {IconButton, useTheme} from 'react-native-paper';
+import {de, en, registerTranslation, TimePickerModal} from "react-native-paper-dates";
 import "intl";
-registerTranslation('en-GB', enGB);
+import moment, {Moment} from "moment";
+
+import {useTranslation} from "react-i18next";
+import {styles} from "../../styles/timePicker.styles"
+
 registerTranslation('de', de);
 registerTranslation('en', en);
-registerTranslation('nl', nl);
 
 type PropType = {
     initialVisibility: boolean;
-    handleTimeChange: () => void;
-    handleConfirm: () => void;
+    handleConfirm: (hoursAndMinutes: {
+        hours: number;
+        minutes: number;
+    }) => any;
+    selectedTime?: Moment
 }
+/**
+ *
+ * @param props (initialVisibility: sets the initial visibility of the modal,
+ *               handleConfirm: callBack function for passing the selected values to the Detailspage,
+ *               selectedTime: optional attribute for passing a preselected value to the component)
+ * @constructor
+ * This component is used in the detail page to pick the desired trigger time of a reminder
+ */
 
-const styles = StyleSheet.create({
-        timeKeyboardContainer: {
-        flex: 2,
-        justifyContent: "center",
-        //backgroundColor: "red"
-    },
-    timeClockIconContainer: {
-        flex: 1,
-        alignContent: "center",
-        justifyContent: "center"
-        //backgroundColor : "blue"
-    }
-})
-export default function CustomTimePicker (props: PropType) {
-    const { initialVisibility, handleTimeChange, handleConfirm } = props;
+export default function CustomTimePicker(props: PropType) {
+    const {initialVisibility, handleConfirm, selectedTime} = props;
     const [modalIsVisible, setModalIsVisible] = useState(initialVisibility)
     const theme = useTheme();
     const currentTime = new Date();
-    const [enteredTime, setEnteredTime] = useState();
-        const onDismiss = useCallback(() => {
+    const {t} = useTranslation()
+    const [selectedHour, setSelectedHour] = useState<number>()
+    const [selectedMinute, setSelectedMinute] = useState<number>()
+
+    const handleDismiss = useCallback(() => {
         setModalIsVisible(false)
     }, [setModalIsVisible])
 
+    useEffect(() => {
+        if (selectedTime) {
+            const parsedTime: Moment = moment(selectedTime);
+            setSelectedHour(parsedTime.hour())
+            setSelectedMinute(parsedTime.minute())
+        }
+    }, [selectedTime])
+
+    useEffect(() => {
+
+    }, [selectedMinute]);
 
 
     return (
-    <>
-    <View style={styles.timeKeyboardContainer}>
-    <TimePicker
-        inputType={"keyboard"}
-        focused={"hours"}
-        onFocusInput={handleTimeChange}
-        onChange={handleTimeChange}
-        hours={currentTime.getHours()}
-        minutes={currentTime.getMinutes()}
-    />
-    </View>
-    <View style={styles.timeClockIconContainer}>
-        <IconButton
-            icon="clock"
-            size={70}
-            iconColor={theme.colors.onPrimary}
-            onPress={() => setModalIsVisible(true)}/>
-    </View>
-    <TimePickerModal visible={modalIsVisible}
-        onDismiss={onDismiss}
-        onConfirm={handleConfirm}
-        />
-    </>);
+        <>
+            <View style={styles.timeKeyboardContainer}>
+                <View style={styles.timeClockIconContainer}>
+                    <IconButton
+                        icon="clock"
+                        size={70}
+                        iconColor={theme.colors.onPrimary}
+                        onPress={() => setModalIsVisible(true)}/>
+
+                    <TimePickerModal visible={modalIsVisible}
+                                     onDismiss={handleDismiss}
+                                     onConfirm={(hoursAndMinutes) => {
+                                         handleConfirm(hoursAndMinutes);
+                                         setModalIsVisible(false);
+                                     }}
+                                     label={t("description.enterTimeClock")}
+                                     cancelLabel={t("description.cancel")}
+                                     hours={selectedHour ? selectedHour : currentTime.getHours()}
+                                     minutes={selectedMinute ? selectedMinute : currentTime.getMinutes()}
+
+                                     uppercase={true}
+                                     animationType={"fade"}
+                    />
+                </View>
+            </View>
+        </>
+    );
 }

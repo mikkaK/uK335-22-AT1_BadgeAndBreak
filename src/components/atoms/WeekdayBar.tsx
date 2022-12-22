@@ -1,82 +1,86 @@
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
 import {Avatar, TouchableRipple, useTheme} from "react-native-paper";
 import WeekDays from "../../config/WeekDays";
-import {useState} from "react";
-import weekDays from "../../config/WeekDays";
+import {useEffect, useState} from "react";
+import {WeekdayType} from "../../types/WeekDayType";
+import {useTranslation} from "react-i18next";
+import {styles} from "../../styles/weekdayBar.styles"
 
-type WeekdayType = {
-    value: string,
-    isSelected: boolean,
+type PropType = {
+    handleStateChange: (stateAndValue: {
+        isSelected: boolean,
+        value: string
+    }) => any;
+
+    selectedValues?: WeekdayType[];
 }
-
-export default function () {
+/**
+ *
+ * @param props (handleStateChange: callBack function for passing the selected values to the Detailspage,
+ *               selectedValues: optional attribute for passing a preselected value to the component)
+ */
+export default function (props: PropType) {
+    const {handleStateChange, selectedValues} = props;
+    const {t} = useTranslation()
     const theme = useTheme();
     const [weekdays, setWeekdays] = useState<WeekdayType[]>([
         {
-            isSelected: true,
-            value: WeekDays.MONDAY
-        },
-        {
-            isSelected: true,
-            value: WeekDays.TUESDAY
+            isSelected: false,
+            value: t("description." + WeekDays.MONDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.WEDNESDAY
+            value: t("description." + WeekDays.TUESDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.THURSDAY
+            value: t("description." + WeekDays.WEDNESDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.FRIDAY
+            value: t("description." + WeekDays.THURSDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.SATURDAY
+            value: t("description." + WeekDays.FRIDAY)
         },
         {
             isSelected: false,
-            value: WeekDays.SUNDAY
+            value: t("description." + WeekDays.SATURDAY)
+        },
+        {
+            isSelected: false,
+            value: t("description." + WeekDays.SUNDAY)
         }
     ])
-    const styles = StyleSheet.create({
-        container: {
-            flexDirection: "row",
-            height: "100%",
-            alignItems: "center",
-            justifyContent: "center"
-        },
-        item: {
-            flex: 1,
-            marginLeft: "1.5%",
-            shadowOpacity: 1,
-            shadowRadius: 2,
-            shadowColor: "#000000",
-            shadowOffset: {width: 1, height: 0.5},
 
-        },
-        button: {
-            backgroundColor: theme.colors.primaryContainer,
-
-        },
-        buttonSelected: {
-            backgroundColor: theme.colors.secondary,
-            borderColor: "#000000",
-            border: "solid",
-            borderRadius: 50,
-            borderWidth: 1
+    useEffect(() => {
+        let weekdaysCopy = [...weekdays];
+        if (selectedValues) {
+            for (const weekDay of weekdaysCopy) {
+                for (const selectedValue of selectedValues) {
+                    if (selectedValue.value === weekDay.value) {
+                        let index = weekdaysCopy.findIndex(item => item.value === selectedValue.value);
+                        weekdaysCopy[index].isSelected = true;
+                    }
+                }
+            }
         }
-    })
-    const handlePress =(value: string) => {
+    }, [selectedValues])
+
+    /**
+     *
+     * @param item
+     */
+    const handlePress = (item: WeekdayType) => {
+        const {value} = item;
         let weekdaysCopy = [...weekdays]
         let index = weekdaysCopy.findIndex(item => item.value === value)
         let toChange = {...weekdaysCopy[index]}
         toChange.isSelected = !toChange.isSelected
         weekdaysCopy[index] = toChange
         setWeekdays(weekdaysCopy)
-
+        handleStateChange(weekdaysCopy[index]);
     }
 
 
@@ -85,13 +89,15 @@ export default function () {
             {weekdays.map((item: WeekdayType) => {
                 return (
                     <View style={styles.item}>
-                        <TouchableRipple onPress={() => handlePress(item.value)}>
-                        <Avatar.Text size={40}
-                                     label={item.value}
-                                     style={item.isSelected ? styles.buttonSelected : styles.button}
-                                     labelStyle={{fontWeight: "bold", fontSize: 17}}
-
-                        />
+                        <TouchableRipple onPress={() => handlePress(item)}>
+                            <Avatar.Text size={40}
+                                         label={item.value}
+                                         style={item.isSelected ? {
+                                             ...styles.buttonSelected,
+                                             backgroundColor: theme.colors.secondary
+                                         } : {backgroundColor: theme.colors.primaryContainer}}
+                                         labelStyle={{fontWeight: "bold", fontSize: 17}}
+                            />
                         </TouchableRipple>
                     </View>
                 )

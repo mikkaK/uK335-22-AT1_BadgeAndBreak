@@ -1,57 +1,44 @@
-import {Button, StatusBar, StyleSheet, View} from "react-native";
+import {View} from "react-native";
 import {IconButton, useTheme} from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 import {useState} from "react";
 import Repeat from "../../config/Repeat";
+import {useTranslation} from "react-i18next";
+import {styles} from "../../styles/repeatBar.styles"
 
-export default function () {
+type PropType = {
+    handleChange: (value: string) => any;
+    selectedValue?: string;
+}
+/**
+ *
+ * @param props (handleChange: callBack function to pass values to Detailpage,
+ *               selectedValue: optional attribute for passing a preselected value to the component)
+ */
+export default function (props: PropType) {
+    const {handleChange, selectedValue} = props;
     const theme = useTheme();
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
-    const [repeat, setRepeat] = useState<string>("never")
-    const [repeatOptions, setRepeatOptions] = useState( [
+    const [repeat, setRepeat] = useState<string>(selectedValue ? selectedValue : "never")
+    const {t} = useTranslation()
+    const repeatOptions = [
         {
-            label: "Never",
+            label: t("description.never"),
             value: Repeat.NEVER_REPEAT,
         },
         {
-            label: "Daily",
-            value: Repeat.DAILY_REPEAT,
-        },
-        {
-            label: "Weekly",
+            label: t("description.weekly"),
             value: Repeat.WEEKLY_REPEAT,
         },
         {
-            label: "Monthly",
+            label: t("description.monthly"),
             value: Repeat.MONTHLY_REPEAT,
         },
         {
-            label: "Yearly",
+            label: t("description.yearly"),
             value: Repeat.YEARLY_REPEAT,
         }
-    ])
-
-    const styles = StyleSheet.create({
-        container: {
-            flexDirection: "row",
-            height: "100%",
-            alignItems: "center",
-            justifyContent: "center"
-        },
-        items: {},
-        dropdown: {
-            flex: 4,
-        },
-        repeatIcon: {
-            flex: 1,
-            alignItems: "center"
-        },
-        dropDownIcon: {
-            flex: 1,
-            alignItems: "center"
-        }
-
-    })
+    ]
 
     return (
         <View style={styles.container}>
@@ -73,28 +60,31 @@ export default function () {
                         setShowDropDown(true)
                     }}
                     value={repeat}
-                    setValue={setRepeat}
+                    setValue={(_value: string) => {
+                        setRepeat(_value);
+                        handleChange(_value);
+                    }}
                     list={repeatOptions}
                     theme={theme}
                 />
             </View>
             <View>
                 {!showDropDown ?
-                <IconButton
-                    icon={"chevron-down"}
-                    size={30}
-                    iconColor={theme.colors.onPrimary}
-                    animated={true}
-                    onPress={() => setShowDropDown(true)}
-                />
+                    <IconButton
+                        icon={"chevron-down"}
+                        size={30}
+                        iconColor={theme.colors.onPrimary}
+                        animated={true}
+                        onPress={() => setShowDropDown(true)}
+                    />
                     :
-                <IconButton
-                    icon={"chevron-up"}
-                    size={30}
-                    iconColor={theme.colors.onPrimary}
-                    animated={true}
-                    onPress={() => setShowDropDown(true)}
-                />
+                    <IconButton
+                        icon={"chevron-up"}
+                        size={30}
+                        iconColor={theme.colors.onPrimary}
+                        animated={true}
+                        onPress={() => setShowDropDown(true)}
+                    />
                 }
             </View>
         </View>

@@ -1,0 +1,28 @@
+{
+  "translation": {
+    "description": {
+      "reminders": "Reminders",
+      "details": "Reminder page",
+      "placeholderTextFiled": "Text of your reminder",
+      "label": "Title",
+      "enterTimeClock": "Enter Time",
+      "cancel": "cancel",
+      "save": "save",
+      "time": "Time:",
+      "never": "Never",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "MO": "MO",
+      "TU": "TU",
+      "WE": "WE",
+      "TH": "TH",
+      "FR": "FR",
+      "SA": "SA",
+      "SU": "SU",
+      "reminderCreated": "Reminder was created",
+      "deleteMessage": "The reminder got deleted",
+      "errorMessageFillAllFields": "Please fill out every field"
+    }
+  }
+}

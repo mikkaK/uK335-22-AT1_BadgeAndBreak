@@ -1,0 +1,28 @@
+{
+  "translation": {
+    "description": {
+      "reminders": "Erinnerungen",
+      "details": "Erinnerungsseite",
+      "placeholderTextFiled": "Text der Erinnerung",
+      "label": "Titel",
+      "enterTimeClock": "Zeit eingeben",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "time": "Zeit:",
+      "never": "Niemals",
+      "weekly": "Wöchentlich",
+      "monthly": "Monatlich",
+      "yearly": "Jährlich",
+      "MO": "MO",
+      "TU": "DI",
+      "WE": "MI",
+      "TH": "DO",
+      "FR": "FR",
+      "SA": "SA",
+      "SU": "SO",
+      "created": "Erinnerung wurde erstellt",
+      "deleteMessage": "Die Erinnerung wurde gelöscht",
+      "errorMessageFillAllFields": "Bitte fülle alle Felder aus"
+    }
+  }
+}
